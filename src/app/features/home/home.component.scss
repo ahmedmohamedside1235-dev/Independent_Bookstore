@@ -1,0 +1,155 @@
+@use "../../styles/mixin" as *;
+
+.header {
+    background-color: var(--ac2);
+
+    .content {
+        span {
+            background-color: var(--surf);
+            color: var(--brand-h);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--bd);
+        }
+
+        h1 {
+            font-size: 45px;
+
+            @include responsive(350) {
+                font-size: 30px;
+            }
+
+            @include responsive(450) {
+                font-size: 32px;
+            }
+
+            @include responsive(650) {
+                font-size: 42px;
+            }
+        }
+
+        p.info {
+            font-size: 16px;
+
+            @include responsive(350) {
+                font-size: 12px;
+            }
+
+            @include responsive(650) {
+                font-size: 14px;
+            }
+        }
+
+        form {
+            input {
+                color: var(--tp);
+                background-color: var(--bg2);
+                box-shadow: none;
+                border: 1px solid var(--bd);
+                border-radius: 6px;
+                padding: 12px 16px;
+                width: 70%;
+
+                &:focus {
+                    background-color: var(--surf);
+                    border-color: var(--ac);
+                }
+
+                &::placeholder {
+                    color: rgb(255, 255, 255, .4);
+                }
+            }
+
+            button {
+                background-color: var(--brand);
+                color: #fff;
+                border-radius: 6px;
+            }
+        }
+    }
+}
+
+
+.information {
+    .stats-strip {
+        .info {
+            background-color: var(--surf);
+            border-radius: 10px;
+            width: 100%;
+            border: 1px solid var(--bd);
+            transition: all .3s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--ac2);
+                border-color: var(--brand);
+            }
+
+            strong {
+                color: var(--brand-h);
+            }
+        }
+    }
+}
+
+.mood {
+    .content {
+        .item {
+            background-color: var(--surf);
+            border-radius: 10px;
+            width: 100%;
+            border: 1px solid var(--bd);
+            transition: all .3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+
+            &::before,
+            &::after {
+                @include createEle(150%, 100%);
+                background-color: var(--brand);
+                transform: rotate(0deg);
+                transition: all 1s;
+            }
+
+            &::before {
+                @include position($t: 0, $l: 100%);
+            }
+
+            &::after {
+                @include position($t: 0, $r: 100%);
+            }
+
+            &:hover {
+
+                &::before,
+                &::after {
+                    transform: rotate(180deg);
+                }
+
+                &::before {
+                    left: 0;
+                }
+
+                &::after {
+                    right: 0;
+                }
+
+                p {
+                    color: #fff;
+                }       
+            }
+
+            p {
+                color: var(--td-text);
+                transition: all 1s;
+            }
+
+            span {
+                font-size: 26px;
+            }
+        }
+    }
+}

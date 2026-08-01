@@ -1,0 +1,94 @@
+<section class="header">
+    <div class="container py-5 d-flex justify-content-center align-items-center">
+        <div class="content text-center">
+            <span class="hero__badge d-inline-block mb-3">✦ Loved by 12,000+ readers</span>
+            <h1 class="head">
+                Never lose track of what
+                <br>
+                you're reading again
+            </h1>
+            <p class="mb-4 info">
+                Search millions of books, build your shelf, and read together — for free, forever.
+            </p>
+            <form class>
+                <div class="d-flex justify-content-center">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control search"
+                        placeholder="Try 'The Hobbit' or a favorite author..."
+                    >
+                    <!-- [(ngModel)]="searchQuery" -->
+                    <button class="btn ms-2">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="information container py-5">
+    <div class="row">
+        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+            <div class="info text-center py-3 px-5 d-flex flex-column ">
+                <strong>40M+</strong>
+                <span>Books indexed</span>
+            </div>
+        </div>
+        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+            <div class="info text-center py-3 px-5 d-flex flex-column ">
+                <strong>12K+</strong>
+                <span>Active readers</span>
+            </div>
+        </div>
+        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+            <div class="info text-center py-3 px-5 d-flex flex-column gold">
+                <strong>4.8★</strong>
+                <span>Average rating</span>
+            </div>
+        </div>
+        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+            <div class="info text-center py-3 px-5 d-flex flex-column">
+                <strong>Free</strong>
+                <span>No subscription</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mood container py-5">
+    <h2>Browse by mood</h2>
+    <div class="content">
+        <div class="row">
+            @for (moode of moodes; track $index) {
+                <div class="moodes col-lg-3">
+                    <div class="item py-4 px-5">
+                        <div class="position-relative z-3 d-flex flex-column align-items-center justify-content-center">
+                            <span>{{moode.icon}}</span>
+                            <p class="mb-0">{{moode.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+<section class="trending">
+    <div class="container">
+        <div class="head">
+            <h2>Trending in Fiction</h2>
+            <p>See More</p>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="item">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

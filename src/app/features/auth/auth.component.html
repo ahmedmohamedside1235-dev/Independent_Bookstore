@@ -1,0 +1,9 @@
+<div class="auth overflow-hidden d-flex justify-content-center align-items-center">
+    <div class="container">
+        @if (isLogin()) {
+            <app-login (switchToRegister)="toggleIsLogin()" [isShow]="isLogin()"></app-login>
+        }@else {
+            <app-register [isShow]="!isLogin()" (switchToLogin)="toggleIsLogin()"></app-register>
+        }
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="login py-3 {{isHide() ? 'hide' : ''}} {{isShow() ? 'show' : ''}}">
+    <div class="content">
+        <div class="head d-flex justify-content-center align-items-center py-4 flex-column">
+            <i class="fa-solid fa-book-open mb-2"></i>
+            <h3>Welcome Back</h3>
+            <p>Sign in to your bookstore account</p>
+        </div>
+        <div class="body px-4 py-4">
+            <form #form="ngForm" (submit)="validateForm(form)">
+                <!-- * input email -->
+                <div class="input-group mb-4">
+                    <label for="Email" class="mb-2 d-block w-100">Email Address</label>
+                    <div class="input w-100 position-relative">
+                        <i class="fa-solid fa-envelope style"></i>
+                        <input type="email" class="form-control" id="Email" #email="ngModel" ngModel name="email"
+                            placeholder="example@gmail.com">
+                    </div>
+                    @if (isEmailRequired()) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> The email is
+                        required</p>
+                    }
+                </div>
+
+                <!-- * input password -->
+                <div class="password">
+                    <div class="input-group me-2">
+                        <label for="Current_password" class="d-block w-100 mb-2">Password</label>
+                        <div class="input w-100 position-relative">
+                            <i class="fa-solid fa-lock style"></i>
+                            <div class="current_password psd">
+                                <input [type]="(isShowPassword() ? 'text' : 'password')" class="form-control"
+                                    id="Current_password" #password="ngModel" ngModel name="password"
+                                    placeholder="Create password">
+                                <i class="icon_eye fa-solid {{isShowPassword() ? 'fa-eye' : 'fa-eye-slash'}}"
+                                    (click)="toggleIcon()"></i>
+                            </div>
+                        </div>
+                        @if (isPasswordRequired()) {
+                        <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> The password
+                            is required</p>
+                        }
+                    </div>
+                </div>
+
+                @if (invalidCredentials()) {
+                <p class="invalid w-100 mb-0 text-center alert alert-danger mt-2">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i>Invalid email or password
+                </p>
+                }
+
+                <!-- *button submit -->
+                <button class="btn btn_login d-block w-100 mt-3">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Sign In
+                </button>
+
+                <div class="already my-3 d-flex justify-content-center align-items-center">
+                    <hr>
+                    <p class="mx-2 mb-0">Or</p>
+                    <hr>
+                </div>
+
+                <div class="message d-flex align-items-center justify-content-center">
+                    <div class="already d-flex justify-content-center align-items-center">
+                        <p class="mb-0">Don't have an account?</p>
+                    </div>
+                    <div class="login_component" (click)="switchRequested()">
+                        <p class="mb-0">Create one here</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

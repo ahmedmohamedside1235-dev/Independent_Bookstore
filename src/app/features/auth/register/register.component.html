@@ -1,0 +1,144 @@
+<div class="register {{isShow() ? 'show' : ''}} {{isHide() ? 'hide' : ''}} py-4">
+    <div class="content">
+        <div class="head d-flex justify-content-center align-items-center py-4 flex-column">
+            <i class="fa-solid fa-feather-pointed mb-2"></i>
+            <h3>Create Your Account</h3>
+            <p>Join the independent bookstore community</p>
+        </div>
+        <div class="body px-4 py-4">
+            <form #form="ngForm" (submit)="validateForm(form)">
+                <!-- * input name -->
+                <div class="input-group mb-4">
+                    <label for="Name" class="mb-2 d-block w-100">Full Name</label>
+                    <div class="input position-relative w-100">
+                        <i class="fa-solid fa-user style"></i>
+                        <input type="text" class="form-control" [class.is-invalid]="name.touched && !isValidName()"
+                            [class.is-valid]="name.touched && isValidName()" (ngModelChange)="validateName($event)"
+                            id="Name" #name="ngModel" ngModel name="name" placeholder="Your full name">
+                    </div>
+                    @if (name.value === "" && name.touched) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Your name is
+                        required</p>
+                    }@else if (name.touched && !isValidName()) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Each word must be
+                        at least 3 letters long (up to 3 words)</p>
+                    }
+                </div>
+
+                <!-- * input email -->
+                <div class="input-group mb-4">
+                    <label for="Email" class="mb-2 d-block w-100">Email Address</label>
+                    <div class="input w-100 position-relative">
+                        <i class="fa-solid fa-envelope style"></i>
+                        <input type="text" class="form-control"
+                            [class.is-invalid]="email.touched && !isValidEmail() || !isEmailUnique()"
+                            [class.is-valid]="email.touched && isValidEmail() && isEmailUnique()" id="Email"
+                            (ngModelChange)="validateEmail($event)" #email="ngModel" ngModel name="email"
+                            placeholder="example@gmail.com">
+                    </div>
+                    @if (email.value === "" && email.touched) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Your email is
+                        required</p>
+                    }@else if (email.touched && !isValidEmail()) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Invalid email
+                        format (example: user@gmail.com)</p>
+                    }@else if (email.touched && !isEmailUnique()) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Your email is
+                        already exists</p>
+                    }
+                </div>
+
+                <!-- * input phone -->
+                <div class="input-group mb-4">
+                    <label for="Phone" class="mb-2 d-block w-100">Phone</label>
+                    <div class="input position-relative w-100">
+                        <i class="fa-solid fa-phone style"></i>
+                        <input type="text" class="form-control" [class.is-invalid]="phone.touched && !isValidPhone()"
+                            [class.is-valid]="phone.touched && isValidPhone()" id="Phone" #phone="ngModel"
+                            (ngModelChange)="validatePhone($event)" ngModel name="phone" placeholder="Your phone">
+                    </div>
+                    @if (phone.value === "" && phone.touched) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Your phone is
+                        required</p>
+                    }@else if (phone.touched && !isValidPhone()) {
+                    <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Enter a valid
+                        Egyptian phone number</p>
+                    }
+                </div>
+
+                <!-- * input password -->
+                <div class="password">
+                    <div class="input-group mb-4 me-2">
+                        <label for="Current_password" class="d-block w-100 mb-2">Password</label>
+                        <div class="input w-100 position-relative">
+                            <i class="fa-solid fa-lock style"></i>
+                            <div class="current_password psd">
+                                <input [type]="(isShowPassword() ? 'text' : 'password')" [ngModel]="current_password()"
+                                    (ngModelChange)="current_password.set($event)" class="form-control"
+                                    id="Current_password" #password="ngModel" name="password"
+                                    placeholder="Create password">
+                                <i class="icon_eye fa-solid {{isShowPassword() ? 'fa-eye' : 'fa-eye-slash'}}"
+                                    (click)="toggleIcon('password')"></i>
+                            </div>
+                        </div>
+                        @if(password.dirty){
+                        <ul class="password-rules list-unstyled mt-2 py-2 px-2 rounded-2 w-100">
+                            <li [class.valid]="hasMinLength()">
+                                <span>{{ hasMinLength() ? '✓' : '○' }}</span> At least 8 characters
+                            </li>
+                            <li [class.valid]="hasUppercase()">
+                                <span>{{ hasUppercase() ? '✓' : '○' }}</span> At least one uppercase letter
+                            </li>
+                            <li [class.valid]="hasLowercase()">
+                                <span>{{ hasLowercase() ? '✓' : '○' }}</span> At least one lowercase letter
+                            </li>
+                            <li [class.valid]="hasDigit()">
+                                <span>{{ hasDigit() ? '✓' : '○' }}</span> At least one digit
+                            </li>
+                            <li [class.valid]="hasSpecialChar()">
+                                <span>{{ hasSpecialChar() ? '✓' : '○' }}</span> At least one special character
+                            </li>
+                        </ul>
+                        }@else if (password.value === "" && password.touched) {
+                        <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> The password is
+                            required</p>
+                        }
+
+                    </div>
+
+                    <div class="input-group mb-4 ">
+                        <label for="Confirm_password" class="d-block w-100 mb-2">Confirm password</label>
+                        <div class="input w-100 position-relative">
+                            <i class="fa-solid fa-lock style"></i>
+                            <div class="confirm_password psd">
+                                <input [type]="(isShowPasswordConfirm() ? 'text' : 'password')" class="form-control"
+                                    id="Confirm_password" [ngModel]="confirmPassword()"
+                                    (ngModelChange)="onConfirmPasswordInput($event)" #confirm_password="ngModel" ngModel
+                                    name="confirm_password" placeholder="Repeat password">
+                                <i class="icon_eye fa-solid {{isShowPasswordConfirm() ? 'fa-eye' : 'fa-eye-slash'}}"
+                                    (click)="toggleIcon('confirm')"></i>
+                            </div>
+                        </div>
+                        @if (confirm_password.dirty && !passwordsMatch()) {
+                        <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i>Passwords don't
+                            match</p>
+                        }
+                    </div>
+                </div>
+
+                <!-- *button submit -->
+                <button class="btn btn_login d-block w-100" [disabled]="!isFormValid()"><i
+                        class="fa-solid fa-user-plus me-1"></i>Create Account</button>
+
+                <div class="already my-4 d-flex justify-content-center align-items-center">
+                    <hr>
+                    <p class="mx-2 mb-0">already a member?</p>
+                    <hr>
+                </div>
+                <div class="login_component" (click)="switchRequested()">
+                    <p class="mb-0">Sign in to your account</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
