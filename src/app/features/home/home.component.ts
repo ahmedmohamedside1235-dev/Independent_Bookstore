@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../core/services/book.service';
 
@@ -6,6 +6,7 @@ import { BookService } from '../../core/services/book.service';
   selector: 'app-home',
   imports: [FormsModule],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {

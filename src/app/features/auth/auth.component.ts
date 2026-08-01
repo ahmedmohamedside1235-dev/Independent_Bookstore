@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
   selector: 'app-auth',
   imports: [RegisterComponent, LoginComponent],
   templateUrl: './auth.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './auth.component.scss',
 })
 export class AuthComponent {

@@ -1,4 +1,12 @@
-import { Component, computed, inject, signal, output, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  output,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -8,6 +16,7 @@ import { NotificationService } from '../../../core/services/notification.service
   selector: 'app-register',
   imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
