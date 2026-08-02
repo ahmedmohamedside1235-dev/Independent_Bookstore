@@ -18,7 +18,7 @@ export class HomeComponent {
   ];
 
   public data = inject(BookService);
-  // ngOnInit() {
-  //   console.log(this.data.getBookByCategory("fiction"));
-  // }
+  ngOnInit() {
+    this.data.getBookByCategory("fiction").subscribe((res) => console.log(res));
+  }
 }

@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+@use "bootstrap/scss/bootstrap" as *;
+@use '@fortawesome/fontawesome-free/scss/fontawesome';
+@use '@fortawesome/fontawesome-free/scss/solid';
+@use '@fortawesome/fontawesome-free/scss/brands';
+@use '@fortawesome/fontawesome-free/scss/regular';
+@use "./app/styles/root";
+
+
+
+
+
+
+body {
+    background-color: var(--bg-main);
+    color: var(--tp);
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Georgia',
+        'Times New Roman',
+        serif;
+    color: var(--th);
+}
+
+p {
+    margin: 0 0 16px;
+    color: var(--ts-text);
+}
