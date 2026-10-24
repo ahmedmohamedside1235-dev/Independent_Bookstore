@@ -9,6 +9,7 @@ export class AuthService {
 
   constructor() {
     this.loadUsers();
+    this.restoreCurrentUser();
   }
 
   private loadUsers(): void {
@@ -18,6 +19,16 @@ export class AuthService {
     } catch {
       this.users = [];
     }
+  }
+
+  private restoreCurrentUser(): void {
+    let id = localStorage.getItem('currentUserId');
+
+    if (!id) return;
+
+    let user = this.users.find((user) => user.id === id) ?? null;
+
+    this.currentUser.set(user);
   }
 
   public addUser(userData: any): void {

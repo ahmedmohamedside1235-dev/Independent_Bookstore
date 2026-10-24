@@ -8,10 +8,6 @@
 @use "./app/styles/root";
 
 
-
-
-
-
 body {
     background-color: var(--bg-main);
     color: var(--tp);
@@ -31,4 +27,52 @@ h4 {
 p {
     margin: 0 0 16px;
     color: var(--ts-text);
+}
+
+
+.left {
+    transform: translateX(-80px);
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.right {
+    transform: translateX(80px);
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.up {
+    transform: translateY(50px);
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.down {
+    transform: translateY(-50px);
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.scale {
+    transform: scale(.2);
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+
+.fadeIn {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+.scaleUp {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+}
+
+.fadeLeft,
+.fadeRight {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
 }

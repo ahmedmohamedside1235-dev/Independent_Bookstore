@@ -1,0 +1,1 @@
+export type ShelfStatus = 'want-to-read' | 'reading' | 'finished';

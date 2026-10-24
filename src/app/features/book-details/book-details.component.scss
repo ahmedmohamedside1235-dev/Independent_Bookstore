@@ -1,0 +1,153 @@
+@use '../../styles/mixin' as *;
+
+.container {
+    .book {
+        .part1 {
+            .item {
+                min-width: 340px;
+
+                @include responsive(350) {
+                    min-width: initial;
+                }
+
+                @include responsive(1050) {
+                    min-width: 350px;
+                }
+
+                img {
+                    width: 280px;
+                    height: 450px;
+                    border-radius: 10px;
+                }
+
+                @include responsive(350) {
+                    width: 280px;
+                    margin: auto;
+                }
+
+                @include responsive(1050) {
+                    width: initial;
+                    margin: initial;
+                }
+            }
+        }
+
+        .part2 {
+            .item {
+                min-width: 720px;
+
+                @include responsive(350) {
+                    min-width: initial;
+                }
+
+                @include responsive(1050) {
+                    min-width: 600px;
+                }
+
+                h2 {
+                    font-size: 30px;
+                    font-weight: 600;
+
+                    @include responsive(350) {
+                        font-size: 20px;
+                    }
+
+                    @include responsive(650) {
+                        font-size: 20px;
+                    }
+
+                    @include responsive(850) {
+                        font-size: 25px;
+                    }
+                }
+
+                .subjects {
+                    max-width: 800px;
+
+                    span {
+                        width: fit-content;
+                        display: inline-block;
+                        background-color: var(--ac2);
+                        color: var(--brand-h);
+                        font-size: 13px;
+                        padding: 5px 15px;
+                        user-select: none;
+
+                        @include responsive(350) {
+                            font-size: 11px;
+                        }
+
+                        @include responsive(350) {
+                            font-size: 13px;
+                        }
+                    }
+                }
+
+                .description {
+                    max-width: 640px;
+                    white-space: pre-line;
+                }
+
+                .addToShelf {
+                    border-top: 2px solid var(--bd);
+
+                    .buttons {
+                        button {
+                            border-radius: 6px;
+                            font-weight: 600;
+                            border: 1px solid transparent;
+                            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+                            background-color: transparent;
+                            color: var(--brand);
+                            border-color: var(--brand);
+
+                            @include responsive(350) {
+                                font-size: 12px;
+                            }
+
+                            @include responsive(650) {
+                                font-size: initial;
+                            }
+
+                            &:hover,
+                            &.active {
+                                background-color: var(--brand);
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+
+                .read {
+                    .btn-read {
+                        background-color: var(--brand);
+                        border: 1px solid var(--brand);
+                        color: #fff;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        transition: background-color 0.15s ease, border-color 0.15s ease;
+
+                        i {
+                            margin-inline-end: 6px;
+                        }
+
+                        &:hover {
+                            background-color: var(--brand-h);
+                            border-color: var(--brand-h);
+                            color: #fff;
+                        }
+                    }
+
+                    a:not(.btn-read) {
+                        color: var(--ac);
+                        font-size: 14px;
+
+                        &:hover {
+                            color: var(--brand-h);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

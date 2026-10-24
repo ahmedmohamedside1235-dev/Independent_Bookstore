@@ -1,13 +1,15 @@
 import { Component, inject, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss', './../auth.component.scss'],
 })
 export class LoginComponent {
   public isShowPassword = signal<boolean>(false);
@@ -17,7 +19,10 @@ export class LoginComponent {
   public switchToRegister = output<boolean>();
   public isHide = signal<boolean>(false);
   public isShow = input.required<boolean>();
-  public userSrvices = inject(AuthService);
+  private userSrvices = inject(AuthService);
+  private notificationServive = inject(NotificationService);
+  private router = inject(Router);
+
   public toggleIcon(): void {
     this.isShowPassword.set(!this.isShowPassword());
     return;
@@ -36,6 +41,9 @@ export class LoginComponent {
       return;
     }
     this.invalidCredentials.set(false);
+    this.notificationServive.show('Login Successfully', 'success');
+    form.reset();
+    this.router.navigate(['']);
   }
 
   public switchRequested() {

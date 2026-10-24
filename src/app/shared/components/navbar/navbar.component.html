@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg py-2 down" animationClass="fadeIn">
+    <div class="container">
+        <a class="navbar-brand d-flex justify-content-center align-items-center me-1" routerLink="">
+            <span class="d-flex justify-content-center align-items-center me-2"><i
+                    class="fa-solid fa-book-open"></i></span>
+            BookStore
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <label class="hamburger">
+                <input type="checkbox" />
+                <svg viewBox="0 0 32 32">
+                    <path
+                        d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+                        class="line line-top-bottom"></path>
+                    <path d="M7 16 27 16" class="line"></path>
+                </svg>
+            </label>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto align-items-center mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link me-lg-3 mb-3 mb-lg-0 px-2" aria-current="page"
+                        [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="">
+                        <span class="position-relative z-2">
+                            <i class="fa-solid fa-compass"></i>
+                            Home
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link me-lg-3 mb-3 mb-lg-0 px-2" aria-current="page" routerLinkActive="active"
+                        routerLink="explore">
+                        <span class="position-relative z-2">
+                            <i class="fa-solid fa-compass"></i>
+                            Explore
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item" #shelfCart>
+                    <a class="nav-link me-lg-3 mb-3 mb-lg-0 px-2" routerLinkActive="active" routerLink="shelf">
+                        <span class="position-relative z-2">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            My Shelf
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="auth-info navbar-nav d-flex justify-content-center align-items-center flex-row mb-4 mb-lg-0">
+                <li class="nav-icon d-flex align-items-center justify-content-center">
+                    <a class="nav-mode text-decoration-none d-flex justify-content-center align-items-center"
+                        (click)="themeService.toggle()">
+                        <i class="fa-solid" [class.fa-moon]="themeService.theme() === 'light'"
+                            [class.fa-sun]="themeService.theme() === 'dark'"></i>
+                    </a>
+                </li>
+                @if (!user()) {
+                <li class="nav-item ms-4">
+                    <a class="login btn" routerLink="auth" id="Login">
+                        <button class="btn p-0 text-light">
+                            Login <i class="fa-solid fa-right-to-bracket"></i>
+                        </button>
+                    </a>
+                </li>
+                } @else {
+                <li class="nav-user mx-4 my-2 my-lg-0">
+                    <a class="nav-data text-decoration-none d-flex justify-content-center align-items-center">
+                        <span class="short d-flex align-content-center justify-content-center">
+                            {{ user()?.name ?? '' | editTitle: 'userName' : 'getShort' }}
+                        </span>
+                        <p class="mb-0 ms-1">{{ user()?.name ?? '' | editTitle: 'userName' }}</p>
+                    </a>
+                </li>
+                <button (click)="logout()" class="btn p-0 logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+                }
+            </div>
+        </div>
+    </div>
+</nav>

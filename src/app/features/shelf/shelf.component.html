@@ -1,0 +1,71 @@
+<div class="container pt-5">
+    <div class="head d-flex justify-content-between align-items-center">
+        <div class="info left" animationClass="fadeLeft">
+            <h2>My Shelf</h2>
+            <p>Track everything you want to read, are reading, or have finished.</p>
+        </div>
+        <button routerLink="/explore" class="btn right" animationClass="fadeRight">Explore books</button>
+    </div>
+    <div class="content">
+        <div class="shelf-info my-5">
+            <div class="row">
+
+                <div class="col-md-6 col-lg-4 up" animationClass="fadeIn">
+                    <div class="item mb-4 mb-lg-0" style="--color:#d4a24c">
+                        <div class="save-book d-flex align-items-center">
+                            <h2 class="me-3">{{shelf.total()}}</h2>
+                            <span>Books saved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 up" animationClass="fadeIn" [animationDelay]="200">
+                    <div class="item mb-4 mb-lg-0" style="--color:#5FA8D3">
+                        <div class="read-book d-flex align-items-center">
+                            <h2 class="me-3">{{shelf.reading().length}}</h2>
+                            <span>Reading now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-lg-4 up" animationClass="fadeIn" [animationDelay]="400">
+                    <div class="item" style="--color:#6FBF8B">
+                        <div class="finish-book d-flex align-items-center">
+                            <h2 class="me-3">{{finishedThisYear()}}</h2>
+                            <span>Finished this year</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="shelf-status mb-5">
+
+            <div class="row">
+                <div class="col-lg-6 col-xl-4 right" animationClass="fadeRight">
+                    <div class="item mb-4 mb-xl-0">
+                        <app-shelf-status [books]="shelf.wantToRead()" title="Want to read"
+                            emptyMsg="Books you plan to read will wait here." color="#d4a24c"
+                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event)"
+                            (removeBook)="onRemove($event)"></app-shelf-status>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 up" animationClass="fadeIn" [animationDelay]="200">
+                    <div class="item mb-4 mb-xl-0">
+                        <app-shelf-status [books]="shelf.reading()" title="Reading"
+                            emptyMsg="Pick up a book and it will show up here." color="#5FA8D3"
+                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event)"
+                            (removeBook)="onRemove($event)"></app-shelf-status>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-4 left" animationClass="fadeLeft" [animationDelay]="200">
+                    <div class="item">
+                        <app-shelf-status [books]="shelf.finished()" title="Finished" [statusOptions]="statusOptions"
+                            emptyMsg="Books you've completed will line up here." color="#6FBF8B"
+                            (changeStatus)="onStatusChange($event)" (removeBook)="onRemove($event)"></app-shelf-status>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

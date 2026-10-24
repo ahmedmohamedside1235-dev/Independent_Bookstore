@@ -1,0 +1,115 @@
+<div class="explore container">
+  <div class="header d-flex flex-column justify-content-center align-items-center py-4 px-2 p-sm-5">
+    <h2 class="my-2 up" animationClass="fadeIn">What are you in the mood to read?</h2>
+    <div class="form-search down" animationClass="fadeIn">
+      <form (submit)="showBooks()" class="mb-3 d-flex justify-content-center align-items-center">
+        <input class="form-control me-2" [(ngModel)]="search" name="search" type="search"
+          placeholder="Search books, authors, or keywords..." aria-label="Search" />
+        <button (click)="showBooks()" class="btn search-input d-block">
+          <span class="position-relative z-3">Search</span>
+        </button>
+      </form>
+    </div>
+    <div class="content-info d-flex align-items-center justify-content-center">
+      <div class="state me-4 left" animationClass="fadeLeft">
+        <span class="head">40M+</span>
+        <span class="content">title</span>
+      </div>
+      <div class="state me-4 down" animationClass="fadeIn">
+        <span class="head">6</span>
+        <span class="content">shelves</span>
+      </div>
+      <div class="state right" animationClass="fadeRight">
+        <span class="head">Free</span>
+        <span class="content">forever</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="category py-5 py-lg-5">
+  <div class="container">
+    <div class="row">
+      @for (category of categories; track category.id) {
+      <div class="col-6 col-sm-4 col-lg-2 up" animationClass="fadeIn" [animationDelay]="$index * 200">
+        <div class="item mb-4 mb-lg-0 d-flex justify-content-center align-items-center"
+          (click)="setActiveSubject(category.subject)" [class.active]="activeSubject() === category.subject">
+          <div class="categ-info py-3 px-3 text-center">
+            <div class="book mt-3 mb-2 d-flex justify-content-center align-items-end">
+              @for (h of category.spineHeights; track $index) {
+              <span class="shelf-card__spine" [style.height.px]="h"></span>
+              }
+            </div>
+            <h5 class="my-0">{{ category.name }}</h5>
+            <div class="count-book">
+              <span>{{ category.bookCount }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="books pb-5">
+  <div class="container">
+    <div class="body" #body>
+      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-xl-5">
+        @if (!activeSubject() && !searchQuery()) {
+        <div class="content w-100 py-5 d-flex justify-content-center align-items-center up" animationClass="fadeIn">
+          <div class="empty text-center p-5 d-flex justify-content-center align-items-center flex-column">
+            <div class="icon d-flex justify-content-center align-items-center mb-3">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <p class="title">Your shelf awaits</p>
+            <p class="text">Search for a title or author, or jump right into a shelf above.</p>
+            <p class="label">Popular searches</p>
+            <div class="buttons-searches d-flex">
+              @for (popularSearch of popularSearches; track $index) {
+              <button class="btn me-2" (click)="getBooksByQuery(popularSearch)">
+                {{ popularSearch }}
+              </button>
+              }
+            </div>
+          </div>
+        </div>
+        } @else if (isLoadBooks()) {
+        <div class="load col-12 scale w-100" animationClass="fadeIn">
+          <app-loading [message]="'Please wait while we load the books...'"></app-loading>
+        </div>
+        } @else if (isErrorLoad()) {
+        <div class="error scale text-center py-5 w-100" animationClass="scaleUp">
+          <i class="fa-solid fa-triangle-exclamation mb-3"></i>
+          <div class="error mb-3">
+            Something went wrong while loading the books. <br />
+            Please try again later.
+          </div>
+          <button class="btn" (click)="reloadBooks()">Try Again</button>
+        </div>
+        } @else if (books().length > 0) {
+        @for (book of books(); track book.key) {
+        <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 10">
+          <div class="item cardBook">
+            <app-book-card [book]="book"></app-book-card>
+          </div>
+        </div>
+        }
+        } @else {
+        <div class="no_result w-100 d-flex justify-content-center align-items-center">
+          <app-no-results class="up" [query]="searchQuery() ?? activeSubject() ?? ''" animationClass="fadeIn"
+            [suggestions]="suggestionNames" (cleared)="clearSearch()"
+            (suggestionPicked)="getBooks($event)"></app-no-results>
+        </div>
+        }
+      </div>
+      @if (books().length > 0 && books().length >= 15) {
+      <button type="button" animationClass="fadeIn"
+        class="up {{ isLoadingMore() ? 'load' : '' }} btn m-auto px-5 d-block mt-4 LoadBookMore"
+        [disabled]="isLoadingMore()" (click)="loadMore()">
+        {{ isLoadingMore() ? 'Loading...' : 'Load More' }}
+      </button>
+      }
+    </div>
+  </div>
+</div>

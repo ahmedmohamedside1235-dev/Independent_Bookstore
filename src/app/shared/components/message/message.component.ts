@@ -6,7 +6,6 @@ import { NotificationService } from '../../../core/services/notification.service
   selector: 'app-message',
   imports: [NgClass],
   templateUrl: './message.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {

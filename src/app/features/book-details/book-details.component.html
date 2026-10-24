@@ -1,0 +1,89 @@
+@if (isLoading()) {
+<app-loading class="p-5" [message]="'Please wait to load the book'"></app-loading>
+} @else if (!isLoading() && isNotFound()) {
+<div class="book__empty d-flex py-5 flex-column justify-content-center align-items-center">
+  <h2 class="mb-3">Book not found</h2>
+  <p>We couldn't load details for this book. It may have been removed from Open Library.</p>
+</div>
+} @else if (!isLoading() && book(); as b) {
+<div class="container d-flex justify-content-center align-items-center py-5">
+  <div class="book">
+    <div class="row">
+      <div class="col-lg-4 part1">
+        <div class="item mb-4 mb-lg-0">
+          <img [src]="b?.coverId || 'images/defaultBook.png'" [alt]="b?.title" #bookImg class="img-fluid" />
+        </div>
+      </div>
+
+      <div class="col-lg-8 part2">
+        <div class="item">
+          <h2 class="mb-4">{{ b?.title }}</h2>
+          <div class="subjects d-flex align-items-center flex-wrap mb-3">
+            @if (b.subjects && b.subjects.length) {
+            <div class="details__tags">
+              @for (subject of b.subjects.slice(0, 6); track subject) {
+              <span class="me-2 mb-3 rounded-pill">{{ subject }}</span>
+              }
+            </div>
+            }
+          </div>
+          <p class="description mb-4">
+            {{
+            b.description
+            ? (b.description | editDescription: 90 | cleanDescription)
+            : 'No description available for this book yet.'
+            }}
+          </p>
+
+          <div class="addToShelf pt-4">
+            <h5 class="mb-4">Add To Your Shelf :</h5>
+            <div class="buttons">
+              <button class="want btn me-2 mb-3 mb-lg-0 me-lg-3"
+                [ngClass]="{ active: selectedShelf() == 'want-to-read' }" #want
+                (click)="setStatus('want-to-read', bookImg, want)">
+                <i class="fa-solid fa-bookmark"></i> Want To Read
+              </button>
+              <button class="read btn me-2 mb-3 mb-lg-0 me-lg-3" #read
+                [ngClass]="{ active: selectedShelf() == 'reading' }" (click)="setStatus('reading', bookImg, read)">
+                <i class="fa-brands fa-readme"></i> Reading
+              </button>
+              <button class="finish btn me-2 mb-3 mb-lg-0 me-lg-3" #finish
+                [ngClass]="{ active: selectedShelf() == 'finished' }" (click)="setStatus('finished', bookImg, finish)">
+                <i class="fa-solid fa-check-double"></i> Finished
+              </button>
+
+              @if (selectedShelf() != '') {
+              <button class="btn-danger btn me-2 mb-3 mb-lg-0 me-lg-3" (click)="removeFromShelf()">
+                <i class="fa-solid fa-trash"></i> Remove
+              </button>
+              }
+            </div>
+          </div>
+
+          <div class="read pt-4">
+            @if (readInfo()?.ia && readInfo()!.access !== 'no_ebook') {
+            @if (readInfo()!.access === 'public') {
+            <button class="btn btn-read" (click)="showModelReader('reading', bookImg, read)">
+              <i class="fa-solid fa-book-open-reader"></i> Read now
+            </button>
+            } @else {
+            <a (click)="setStatus('reading', bookImg, read)" class="btn btn-read" target="_blank" rel="noopener"
+              [href]="'https://archive.org/details/' + readInfo()!.ia">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Borrow on Internet
+              Archive
+            </a>
+            }
+            } @else {
+            <p class="mb-0">No digital copy available for this book.</p>
+            }
+          </div>
+
+          @if (showReader() && readInfo()?.ia; as ia) {
+          <app-book-reader [ia]="ia" [title]="b.title" (closed)="showReader.set(false)"></app-book-reader>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

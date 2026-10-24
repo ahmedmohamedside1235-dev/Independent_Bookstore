@@ -1,0 +1,152 @@
+@use '../../../styles/mixin' as *;
+
+.shelf-column {
+    position: relative;
+    background-color: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    overflow: hidden;
+    background-image: linear-gradient(180deg,
+            color-mix(in srgb, var(--color) 10%, transparent), transparent 120px);
+
+    @include responsive(350) {
+        max-width: 340px;
+        margin: auto;
+    }
+
+    @include responsive(1250) {
+        max-width: 340px;
+        margin: auto;
+    }
+
+    .shelf_header {
+        border-bottom: 2px solid var(--color);
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        span {
+            display: inline-block;
+            background-color: var(--color);
+            border-radius: 100%;
+            font-weight: 700;
+            width: 30px;
+            height: 30px;
+            @include flex(center, center);
+        }
+    }
+
+    .shelf_empty {
+        .spines {
+            border-bottom: 4px solid var(--color);
+            padding: 0 16px;
+
+            i {
+                display: inline-block;
+                border: 1px solid color-mix(in srgb, var(--color) 35%, transparent);
+                background-color: color-mix(in srgb, var(--color) 16%, transparent);
+                border-radius: 2px;
+                border-bottom: none;
+                margin-bottom: -8px;
+
+                &:nth-of-type(1) {
+                    height: 60px;
+                    width: 16px;
+                }
+
+                &:nth-of-type(2) {
+                    height: 90px;
+                    width: 18px;
+                }
+
+                &:nth-of-type(3) {
+                    height: 70px;
+                    width: 14px;
+                }
+
+                &:nth-of-type(4) {
+                    height: 100px;
+                    width: 16px;
+                }
+
+                &:nth-of-type(5) {
+                    height: 50px;
+                    transform: rotate(8deg);
+                    transform-origin: bottom left;
+                    width: 18px;
+                }
+            }
+        }
+
+        p {
+            max-width: 200px;
+        }
+    }
+
+    .shelf_list {
+        .shelf-item {
+            &:not(:last-child) {
+                border-bottom: 1px solid color-mix(in srgb, var(--color) 35%, transparent);
+            }
+
+            .shelf_link {
+                display: block;
+                width: 68px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 2px 4px 4px 2px;
+                background-color: color-mix(in srgb, var(--color) 16%, transparent);
+                box-shadow: inset 3px 0 0 rgba(0, 0, 0, 0.25), 2px 4px 10px rgba(0, 0, 0, 0.5);
+                transition: transform 0.2s ease;
+                margin-right: auto;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+
+            .shelf_body {
+                margin-right: auto;
+
+                .shelf_title {
+                    font-size: 16px;
+                    text-decoration: none;
+                    color: var(--tp);
+
+                    &:hover {
+                        text-decoration: underline;
+                        color: var(--color);
+                    }
+                }
+
+                .shelf_author {
+                    font-size: 12px;
+                }
+
+                .shelf_actions {
+                    .shelf_select {
+                        padding: 5px;
+                        font-size: 0.78rem;
+                        font-weight: 600;
+                        color: var(--color);
+                        background-color: color-mix(in srgb, var(--color) 16%, transparent);
+                        border-radius: 8px;
+                        border: 2px solid var(--color);
+                    }
+
+                    button {
+                        font-size: 12px;
+                        border: 1px solid red;
+                        color: red;
+
+                        &:hover {
+                            color: #fff;
+                            background-color: red;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

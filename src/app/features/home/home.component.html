@@ -1,24 +1,18 @@
 <section class="header">
     <div class="container py-5 d-flex justify-content-center align-items-center">
         <div class="content text-center">
-            <span class="hero__badge d-inline-block mb-3">✦ Loved by 12,000+ readers</span>
-            <h1 class="head">
+            <h1 class="head left" animationClass="fadeLeft">
                 Never lose track of what
-                <br>
+                <br />
                 you're reading again
             </h1>
             <p class="mb-4 info">
-                Search millions of books, build your shelf, and read together — for free, forever.
+                Search millions of books, build your shelf, and read together for free, forever.
             </p>
-            <form class>
+            <form animationClass="fadeIn" (submit)="sendQuerySearchToExplore()" class="right">
                 <div class="d-flex justify-content-center">
-                    <input
-                        type="text"
-                        name="search"
-                        class="form-control search"
-                        placeholder="Try 'The Hobbit' or a favorite author..."
-                    >
-                    <!-- [(ngModel)]="searchQuery" -->
+                    <input type="text" name="search" class="form-control search"
+                        placeholder="Try 'The Hobbit' or a favorite author..." [(ngModel)]="search" />
                     <button class="btn ms-2">Search</button>
                 </div>
             </form>
@@ -28,25 +22,29 @@
 
 <section class="information container py-5">
     <div class="row">
-        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
-            <div class="info text-center py-3 px-5 d-flex flex-column ">
+        <div class="stats-strip mb-4 mb-lg-0 left col-sm-6 col-lg-3 d-flex align-items-center justify-content-between"
+            animationClass="fadeIn">
+            <div class="info text-center py-3 px-5 d-flex flex-column">
                 <strong>40M+</strong>
                 <span>Books indexed</span>
             </div>
         </div>
-        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
-            <div class="info text-center py-3 px-5 d-flex flex-column ">
+        <div class="stats-strip mb-4 mb-lg-0 scale col-sm-6 col-lg-3 d-flex align-items-center justify-content-between"
+            animationClass="scaleUp">
+            <div class="info text-center py-3 px-5 d-flex flex-column">
                 <strong>12K+</strong>
                 <span>Active readers</span>
             </div>
         </div>
-        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+        <div class="stats-strip mb-4 mb-sm-0 scale col-sm-6 col-lg-3 d-flex align-items-center justify-content-between"
+            animationClass="scaleUp">
             <div class="info text-center py-3 px-5 d-flex flex-column gold">
                 <strong>4.8★</strong>
                 <span>Average rating</span>
             </div>
         </div>
-        <div class="stats-strip col-lg-3 d-flex align-items-center justify-content-between">
+        <div class="stats-strip right col-sm-6 col-lg-3 d-flex align-items-center justify-content-between"
+            animationClass="fadeIn">
             <div class="info text-center py-3 px-5 d-flex flex-column">
                 <strong>Free</strong>
                 <span>No subscription</span>
@@ -56,39 +54,100 @@
 </section>
 
 <section class="mood container py-5">
-    <h2>Browse by mood</h2>
+    <div class="header_section mb-5 left" animationClass="fadeIn" [animationDelay]="1000">
+        <p class="mb-1"><i class="fa-solid fa-wand-magic-sparkles"></i> Pick a vibe</p>
+        <h3 class="ps-3 d-flex align-items-center mb-0">Browse by mood</h3>
+    </div>
     <div class="content">
         <div class="row">
             @for (moode of moodes; track $index) {
-                <div class="moodes col-lg-3">
-                    <div class="item py-4 px-5">
-                        <div class="position-relative z-3 d-flex flex-column align-items-center justify-content-center">
-                            <span>{{moode.icon}}</span>
-                            <p class="mb-0">{{moode.name}}</p>
-                        </div>
+            <div class="moodes mb-4 mb-lg-0 up col-sm-6 col-lg-3" animationClass="fadeIn"
+                [animationDelay]="$index * 300">
+                <div class="item py-4 px-5" (click)="showBooksInExplore(moode.name)">
+                    <div class="position-relative z-3 d-flex flex-column align-items-center justify-content-center">
+                        <span>{{ moode.icon }}</span>
+                        <p class="mb-0">{{ moode.name }}</p>
                     </div>
                 </div>
+            </div>
             }
         </div>
     </div>
 </section>
 
-
-<section class="trending">
+<section class="trending py-5">
     <div class="container">
-        <div class="head">
-            <h2>Trending in Fiction</h2>
-            <p>See More</p>
+        <div class="header_section mb-5 left" animationClass="fadeIn">
+            <p class="mb-1"><i class="fa-solid fa-fire"></i> Popular right now</p>
+            <h3 class="ps-3 d-flex align-items-center mb-0">Trending in Fiction</h3>
         </div>
         <div class="body">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="item">
-                        
-                    </div>
+            <div class="row row-cols-sm-2 row-cols-md-3 row-cols-xl-5">
+                @if (isLoading()) {
+                <div class="load col-12 scale w-100" animationClass="fadeIn">
+                    <app-loading [message]="'Please wait while we load the books...'"></app-loading>
                 </div>
+                }
+
+                @else if (isError()) {
+                <div class="error scale text-center py-5 w-100" animationClass="scaleUp">
+                    <i class="fa-solid fa-triangle-exclamation mb-3"></i>
+                    <div class="error mb-3">
+                        Something went wrong while loading the books. <br />
+                        Please try again later.
+                    </div>
+                    <button class="btn" (click)="reloadBooks()">Try Again</button>
+                </div>
+                }
+
+                @else if (books().length > 1) {
+
+                    @for (book of books(); track book.key) {
+                    <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 100">
+                        <div class="item cardBook">
+                            <app-book-card [book]="book"></app-book-card>
+                        </div>
+                    </div>
+                    }
+
+                }
+
+                @else {
+                <div class="error scale text-center py-5 w-100" animationClass="scaleUp">
+                    <i class="fa-solid fa-triangle-exclamation mb-3"></i>
+                    <div class="error mb-3">
+                        Something went wrong while loading the books. <br />
+                        Please try again later.
+                    </div>
+                    <button class="btn" (click)="reloadBooks()">Try Again</button>
+                </div>
+                }
+
             </div>
         </div>
+    </div>
+</section>
 
+<section class="how" id="How">
+    <div class="container py-5">
+        <div class="header_section mb-5 text-center left d-flex align-items-center flex-column" animationClass="fadeIn">
+            <p class="mb-3"><i class="fa-solid fa-diagram-project"></i> Simple by design</p>
+            <h3 class="px-3 how d-flex align-items-center mb-0 m-auto">How bookStore works</h3>
+        </div>
+        <div class="content mt-5">
+            <div class="row text-center">
+                @for (how of hows; track how.icon) {
+                <div class="col-lg-4 {{ $index < 2 ? 'col-md-6' : 'col-md-12 m-auto' }} scale" animationClass="scaleUp">
+                    <div class="item info d-flex mb-5 align-items-center flex-column">
+                        <span class="d-flex justify-content-center mb-3 align-items-center">{{
+                            how.icon
+                            }}</span>
+                        <h5>{{ how.name }}</h5>
+                        <p>{{ how.text }}</p>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
     </div>
 </section>

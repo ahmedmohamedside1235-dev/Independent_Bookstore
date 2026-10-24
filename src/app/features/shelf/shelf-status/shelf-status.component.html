@@ -1,0 +1,50 @@
+<section class="shelf-column p-4" [ngStyle]="{'--color':color()}">
+    <header class="shelf_header py-1 d-flex justify-content-between align-items-center">
+        <h3 class="shelf_title mb-3">{{ title() }}</h3>
+        <span class="shelf_count mb-3">{{ books().length }}</span>
+    </header>
+
+    @if (books().length === 0) {
+    <div class="shelf_empty text-center d-flex justify-content-center align-items-center flex-column">
+        <div class="spines my-4">
+            @for (i of [1,2,3,4,5]; track $index) {
+            <i [ngClass]="{'me-2': $index!= 5}"></i>
+            }
+        </div>
+        <p>{{ emptyMsg() }}</p>
+    </div>
+
+    } @else {
+    <div class="shelf_list">
+        @for (book of books(); track book.key) {
+        <div class="shelf-item py-4 d-flex justify-content-center align-items-center">
+            <a [routerLink]="['/book_details', book.key]" class="shelf_link">
+                <img [src]="book?.coverId || 'images/defaultBook.png'" [alt]="book.title" class="shelf_cover img-fluid"
+                    loading="lazy" />
+            </a>
+
+            <div class="shelf_body d-flex justify-content-start flex-column">
+                <a [routerLink]="['/book_details', book.key]" class="shelf_title mb-2">{{ book.title | editTitle
+                    }}</a>
+                <p class="shelf_author">{{ authorsLabel(book) }}</p>
+
+                <div class="shelf_actions">
+                    <select class="shelf_select me-2" [attr.aria-label]="'Change status for ' + book.title"
+                        (change)="StatusSelected(book.key, $any($event.target).value)">
+                        @for (opt of statusOptions(); track opt.value) {
+                        <option [value]="opt.value" [selected]="book.status === opt.value">
+                            {{ opt.label }}
+                        </option>
+                        }
+                    </select>
+
+                    <button class="shelf_remove btn" (click)="removeBook.emit(book.key)">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+</section>

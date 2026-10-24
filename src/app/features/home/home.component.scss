@@ -1,7 +1,22 @@
 @use "../../styles/mixin" as *;
 
+
 .header {
     background-color: var(--ac2);
+    animation: showHead 1s forwards ease;
+    overflow: hidden;
+
+    @keyframes showHead {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 
     .content {
         span {
@@ -58,7 +73,7 @@
                 }
 
                 &::placeholder {
-                    color: rgb(255, 255, 255, .4);
+                    color: rgb(from var(--tp) r g b / .4);
                 }
             }
 
@@ -73,6 +88,8 @@
 
 
 .information {
+    overflow: hidden;
+
     .stats-strip {
         .info {
             background-color: var(--surf);
@@ -81,6 +98,19 @@
             border: 1px solid var(--bd);
             transition: all .3s;
             cursor: pointer;
+
+            @include responsive(350) {
+                width: 280px;
+                margin: auto;
+            }
+
+            @include responsive(650) {
+                width: 250px;
+            }
+
+            @include responsive(850) {
+                width: 100%;
+            }
 
             &:hover {
                 background-color: var(--ac2);
@@ -95,60 +125,166 @@
 }
 
 .mood {
+    overflow: hidden;
+
     .content {
-        .item {
-            background-color: var(--surf);
-            border-radius: 10px;
-            width: 100%;
-            border: 1px solid var(--bd);
-            transition: all .3s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+        .moodes {
+            .item {
+                background-color: var(--surf);
+                border-radius: 10px;
+                width: 100%;
+                border: 1px solid var(--bd);
+                transition: all .3s;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
 
-            &::before,
-            &::after {
-                @include createEle(150%, 100%);
-                background-color: var(--brand);
-                transform: rotate(0deg);
-                transition: all 1s;
-            }
+                @include responsive(350) {
+                    width: 280px;
+                    margin: auto;
+                }
 
-            &::before {
-                @include position($t: 0, $l: 100%);
-            }
+                @include responsive(650) {
+                    width: 250px;
+                }
 
-            &::after {
-                @include position($t: 0, $r: 100%);
-            }
-
-            &:hover {
+                @include responsive(850) {
+                    width: auto;
+                }
 
                 &::before,
                 &::after {
-                    transform: rotate(180deg);
+                    @include createEle(150%, 100%);
+                    background-color: var(--brand);
+                    transform: rotate(0deg);
+                    transition: all 1s;
                 }
 
                 &::before {
-                    left: 0;
+                    @include position($t: 0, $l: 100%);
                 }
 
                 &::after {
-                    right: 0;
+                    @include position($t: 0, $r: 100%);
+                }
+
+                &:hover {
+
+                    &::before,
+                    &::after {
+                        transform: rotate(180deg);
+                    }
+
+                    &::before {
+                        left: 0;
+                    }
+
+                    &::after {
+                        right: 0;
+                    }
+
+                    p {
+                        color: #fff;
+                    }
                 }
 
                 p {
-                    color: #fff;
-                }       
-            }
+                    color: var(--td-text);
+                    transition: all 1s;
+                }
 
-            p {
-                color: var(--td-text);
-                transition: all 1s;
+                span {
+                    font-size: 26px;
+                }
             }
+        }
+    }
+}
 
+.header_section {
+    overflow: hidden;
+
+    p {
+        color: var(--brand);
+        font-weight: 700;
+        font-size: 14px;
+
+        i {
+            color: var(--gold-h);
+            font-size: 28px;
+
+            @include responsive(350) {
+                font-size: 15px;
+            }
+        }
+    }
+
+    h3 {
+        position: relative;
+        font-weight: 700;
+        font-size: 30px;
+
+        @include responsive(350) {
+            font-size: 20px;
+        }
+
+        @include responsive(450) {
+            font-size: 30px;
+        }
+
+        &::before {
+            @include createEle($w: 5px, $h: 20px);
+            background-color: var(--brand);
+            @include position($t: 50%, $l: 0, $b: 6px);
+            transform: translateY(-50%);
+            margin-right: 10px;
+            border-radius: 20px;
+        }
+
+        &.how {
+            &::after {
+                background-color: var(--brand);
+                @include createEle($w: 5px, $h: 20px);
+                @include position($t: 50%, $r: 0, $b: 6px);
+                transform: translateY(-50%);
+                margin-left: 10px;
+                border-radius: 20px;
+            }
+        }
+    }
+
+}
+
+.trending {
+    overflow: hidden;
+
+    .error {
+        i {
+            font-size: 50px;
+            color: var(--brand);
+        }
+
+        button {
+            background-color: var(--brand);
+            color: #fff;
+            border-radius: 6px;
+        }
+    }
+}
+
+#How {
+    overflow: hidden;
+    background-color: var(--surf);
+    border-block: 1px solid var(--bd);
+
+    .content {
+        .info {
             span {
-                font-size: 26px;
+                display: inline-block;
+                width: 45px;
+                height: 45px;
+                border-radius: 100%;
+                background-color: var(--ac2);
             }
         }
     }

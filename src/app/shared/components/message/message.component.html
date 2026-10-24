@@ -1,7 +1,7 @@
 <div class="render">
     @if (notificationService.message(); as n) {
     <div class="message">
-        <p class="alert {{n.type === 'error' ? 'alert-danger' : 'alert-success'}}">
+        <p class="alert {{n.type === 'error' ? 'danger' : 'alert-success'}}">
             <i [ngClass]="n.type === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-xmark'"></i>
             {{n.text}}
         </p>

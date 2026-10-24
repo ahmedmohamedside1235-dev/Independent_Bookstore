@@ -1,189 +1,161 @@
 ================================================================
- PAGETRAIL - Independent Bookstore & Reader's Club Network
+ Independent-Bookstore - Independent Bookstore
  Front-End Graduation Project (Angular - Standalone Components)
 ================================================================
 
 1. PROJECT IDEA
 ----------------
-PageTrail is a web application that helps readers discover books, track
-their personal reading list, and organize simple reading clubs. Users can
-search any book or author, view rich details (cover, description, author,
-publish year), and manage their own reading shelf across three states:
-Want to Read / Reading / Finished.
+Independent-Bookstore is a web application that helps readers discover books and
+track their personal reading list. Users can search any book or author,
+view rich details (cover, description, subjects), and manage their own
+reading shelf across three states: Want to Read / Reading / Finished.
 
 The project relies entirely on a free external API (Open Library) accessed
-through Angular services. No custom backend is required. The "shelf" and
-"reading club" data are managed locally (browser storage), since Open
-Library only provides book data, not user accounts.
+through Angular services. No custom backend is required. The "shelf" data
+is managed locally (browser storage), since Open Library only provides
+book data, not user accounts.
 
 2. CORE CONCEPT / VALUE
 ------------------------
-- One search box gives real book data: cover image, author, publish year,
-  number of editions, and a full description.
+- One search box gives real book data: cover image, author, publish year
+  and a full description.                                                   Done
 - A personal "Shelf" (Dashboard) replaces scattered notes about what to
-  read next.
-- A lightweight Reading Club feature (local data) lets a user simulate
-  group reading with a shared list and simple progress tracking.
+  read next.                                                                Done
 - Everything is built as standalone Angular components (no NgModules),
-  following the current recommended Angular architecture.
+  following the current recommended Angular architecture.                   Done
 
 3. EXTERNAL API USED
 -----------------------
 Open Library API - fully free, no signup, no API key required.
 
-  a) Search books by title / author / keyword
+  a) Search books by title / author / keyword                               Done
      GET https://openlibrary.org/search.json?q={query}&limit=20
 
-  b) Get full details of a specific book (work)
+  b) Get full details of a specific book (work)                             Done
      GET https://openlibrary.org{work_key}.json
      (work_key comes from the "key" field returned in search results,
       e.g. "/works/OL82563W")
 
-  c) Get book cover image
+  c) Get book cover image                                                   Done
      GET https://covers.openlibrary.org/b/id/{cover_i}-L.jpg
      (sizes available: S = small, M = medium, L = large)
 
-  d) Get author details (optional, for an Author page)
-     GET https://openlibrary.org{author_key}.json
-
-  e) Get subjects / genres (optional, for browsing by category)
+  d) Get subjects / genres (for browsing by category)                       Done
      GET https://openlibrary.org/subjects/{subject}.json
      (e.g. https://openlibrary.org/subjects/fantasy.json)
 
 Notes on the API response:
 - Not every book has every field. "cover_i", "author_name", and
   "first_publish_year" can be missing, so all related model fields
-  must be optional.
+  must be optional.                                                         Done
 - "key" uniquely identifies a book (work) and is required to fetch
-  full details or link to a Book Details page.
+  full details or link to a Book Details page.                              Done
 
 4. PROJECT STRUCTURE (STANDALONE ANGULAR)
 -------------------------------------------
 src/app/
  |-- core/
  |    |-- services/
- |    |     book-search.service.ts     (search + book/work details)
- |    |     cover.service.ts           (builds cover image URLs)
- |    |     author.service.ts          (optional author lookups)
+ |    |     book-search.service.ts     (search + book/work details)          Done  (built as bookServices/book.service.ts)
+ |    |     cover.service.ts           (builds cover image URLs)             Done  (built into book.service.ts)
  |    |     shelf-storage.service.ts   (manages user's personal shelf,
- |    |                                 local storage based)
- |    |     club-storage.service.ts    (manages local reading club data)
+ |    |                                 local storage based)                 Done  (built as bookServices/shelf-user-books.service.ts)
  |    |
  |    |-- models/
- |    |     book.model.ts
- |    |     author.model.ts
- |    |     shelf-item.model.ts
- |    |     club.model.ts
- |    |     auth.modle.ts                                                        Done
- |    |
- |    |-- interceptors/
- |    |     error.interceptor.ts
- |    |
- |    |-- guards/
- |          book-exists.guard.ts
+ |    |     auth.model.ts                                                    Done  (built as user.model.ts)
+ |    |     shelfStatus.model.ts                                             Done
  |
  |-- shared/
  |    |-- components/
- |    |     navbar/
- |    |     footer/
- |    |     loading-spinner/
- |    |     book-card/
- |    |     rating-badge/
- |    |     modal/
+ |    |     navbar/                                                          Done
+ |    |     loading-spinner/                                                 Done  (built as loading/)
+ |    |     book-card/                                                       Done
+ |    |     modal/                                                           Done  (built as book-reader/ - reader modal)
  |    |
  |    |-- pipes/
- |    |     truncate-text.pipe.ts
+ |    |     truncate-text.pipe.ts                                            Done  (built as edit-description-pipe.ts,
+ |    |                                                                             edit-title-pipe.ts,
+ |    |                                                                             clean-description-pipe.ts)
  |    |
- |    |-- directives/
+ |    |-- directives/                                                        Done  (animation.directive.ts)
  |
  |-- features/
- |    |-- auth/                                                                  Done
- |    |       register/                                                          Done
- |    |       login/                                                             Done
- |    |-- home/                                                                   
- |    |-- about/                                                                  
- |    |-- explore/                  (search results grid)                         
- |    |     explore.component.ts                                                  
- |    |     book-result-card/                                                     
- |    |-- book-details/
- |    |     book-details.component.ts
- |    |-- dashboard/                (My Shelf)
- |    |     dashboard.component.ts
- |    |     shelf-column/           (Want to Read / Reading / Finished)
- |    |-- reading-club/             (optional feature)
- |    |     reading-club.component.ts
- |    |-- profile/
+ |    |-- auth/                                                              Done
+ |    |       register/                                                      Done
+ |    |       login/                                                         Done
+ |    |-- home/                                                              Done
+ |    |-- explore/                  (search results grid)                    Done
+ |    |     explore.component.ts                                              Done
+ |    |     book-result-card/                                                Done  (reuses shared/book-card)
+ |    |-- book-details/                                                      Done
+ |    |     book-details.component.ts                                        Done
+ |    |-- dashboard/                (My Shelf)                               Done  (built as shelf/)
+ |    |     dashboard.component.ts                                           Done  (built as shelf.component.ts)
+ |    |     shelf-column/           (Want to Read / Reading / Finished)      Done  (built as shelf-status/)
  |
- |-- app.routes.ts
- |-- app.config.ts
- |-- app.component.ts
+ |-- app.routes.ts                                                          Done
+ |-- app.config.ts                                                          Done
+ |-- app.component.ts                                                       Done  (built as app.ts)
 
 5. PAGES REQUIRED
 -------------------
 
-5.1 HOME PAGE
-   - Navbar (logo, nav links, login/signup buttons)
-   - Hero section: heading, short description, book/author search bar
-   - Trust indicators (number of books indexed, active readers, rating)
-   - "Trending / Popular books" section: 4-6 book cards (cover, title,
-     author, publish year)
+5.1 HOME PAGE                                                               Done
+   - Navbar (logo, nav links, login/signup buttons)                         Done
+   - Hero section: heading, short description, book/author search bar       Done
+   - Trust indicators (number of books indexed, active readers, rating)     Done
+   - "Trending / Popular books" section: book cards (cover, title,
+     author, publish year)                                                  Done
    - "How it works" section: 3 steps (search - add to shelf - track
-     progress)
-   - Testimonial section (optional)
-   - Footer (copyright, links)
+     progress)                                                              Done
 
-5.2 EXPLORE PAGE
-   - Search bar for title / author / keyword
-   - Optional filters (by subject/genre using the Subjects endpoint)
-   - Grid of result cards (cover, title, author, publish year, edition
-     count as a popularity hint)
-   - Loading state and "no results" state
-   - Each card links to Book Details page
+5.2 EXPLORE PAGE                                                            Done
+   - Search bar for title / author / keyword                                Done
+   - Optional filters (by subject/genre using the Subjects endpoint)        Done
+   - Grid of result cards (cover, title, author, publish year)              Done
+   - Loading state and "no results" state                                   Done
+   - Each card links to Book Details page                                   Done
 
-5.3 BOOK DETAILS PAGE
-   - Large cover image
-   - Title, author(s), first publish year, edition count
-   - Description (fetched from the work details endpoint)
+5.3 BOOK DETAILS PAGE                                                       Done
+   - Large cover image                                                      Done
+   - Title                                                                  Done
+   - Description (fetched from the work details endpoint)                   Done
    - "Add to Shelf" action with three options: Want to Read / Reading /
-     Finished
-   - Optional: list of other editions or related subjects
+     Finished                                                               Done
+   - Related subjects                                                       Done
 
-5.4 DASHBOARD PAGE (My Shelf)
-   - Three columns or tabs: Want to Read / Reading / Finished
+5.4 DASHBOARD PAGE (My Shelf)                                               Done
+   - Three columns or tabs: Want to Read / Reading / Finished               Done
    - Each entry shown as a compact book card with a quick status
-     changer and remove option
-   - Quick stats (total books saved, finished this year, etc.)
-
-5.5 READING CLUB PAGE (optional/local feature)
-   - List of simple reading "clubs" (locally stored, not from API)
-   - Each club: current book, member count (static/simulated),
-     simple progress bar
-   - Basic "create a club" form to add a new local club entry
-
-5.6 PROFILE PAGE
-   - User basic info (name, email, avatar placeholder)
-   - Reading preferences (favorite genres - optional)
-
-5.7 ABOUT PAGE
-   - Short project description
-   - Purpose / team info (for the academic project context)
+     changer and remove option                                              Done
+   - Quick stats (total books saved, finished this year, etc.)              Done
 
 6. DESIGN NOTES
 -----------------
-- All pages share the same Navbar and Footer components.
-- Book Card component is reused across Home, Explore, and Dashboard
-  (configurable via @Input() for compact vs. full display).
-- Color palette should stay consistent (soft neutral background, one
-  accent color, clear borders, generous spacing).
-- Language: English UI.
+- All pages share the same Navbar component.                                Done
+- Book Card component is reused across Home and Explore.                    Done
+- Color palette is consistent (soft neutral background, one accent
+  color, clear borders, generous spacing).                                  Done
+- Language: English UI.                                                     Done
 
-7. WHAT'S NEXT
+7. BUILD ORDER
 -----------------
-- Build components one page at a time (Home -> Explore -> Book Details
-  -> Dashboard -> Reading Club -> Profile/About).
+- Build components one page at a time: Home -> Explore -> Book Details
+  -> Dashboard.                                                             Done
 - Build book-search.service.ts and cover.service.ts early, since every
-  page depends on live API data rather than static mock data.
+  page depends on live API data rather than static mock data.               Done
 - Build shelf-storage.service.ts before the Dashboard page, since the
-  Dashboard is just a view over locally stored shelf data.
+  Dashboard is just a view over locally stored shelf data.                  Done
+
+8. EXTRA FEATURES ADDED (NOT IN THE ORIGINAL PLAN)
+----------------------------------------------------
+- Light / Dark theme toggle (color-mode.service.ts)                         Done
+- Toast notifications (notification.service.ts + message component)         Done
+- "Fly to shelf" animation when adding a book (fly-to-cart.service.ts)      Done
+- Read books online through the Internet Archive reader (book-reader)       Done
+- Browse by mood section on Home                                            Done
+- "No results" component with suggestions                                   Done
+- Scroll animations directive (animation.directive.ts)                      Done
+- Local auth service (register / login / logout, per-user shelf)            Done
 
 ================================================================

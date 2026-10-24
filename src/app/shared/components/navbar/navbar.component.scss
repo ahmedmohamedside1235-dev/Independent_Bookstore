@@ -1,0 +1,234 @@
+@use "../../../styles/mixin" as*;
+
+nav.navbar {
+    @include position($p : sticky, $t: 0, $l: 0, $z: 1000);
+    @include area($w: 100%);
+    background-color: var(--surf);
+    border-bottom: 1px solid var(--bd);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+
+    .navbar-brand {
+        color: var(--brand-h);
+        font-size: 20px;
+        font-weight: 700;
+        font-family: Georgia, "Times New Roman", serif;
+
+        span {
+            width: 40px;
+            height: 40px;
+            background-color: var(--ac2);
+            color: var(--brand);
+            font-size: 16px;
+            border-radius: 10px;
+        }
+    }
+
+    .navbar-toggler {
+        box-shadow: none;
+        border: none;
+
+        .hamburger {
+            cursor: pointer;
+        }
+
+        .hamburger input {
+            display: none;
+        }
+
+        .hamburger svg {
+            height: 50px;
+            transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .line {
+            fill: none;
+            stroke: var(--brand);
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 3;
+            transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .line-top-bottom {
+            stroke-dasharray: 12 63;
+        }
+
+        .hamburger input:checked+svg {
+            transform: rotate(-45deg);
+        }
+
+        .hamburger input:checked+svg .line-top-bottom {
+            stroke-dasharray: 20 300;
+            stroke-dashoffset: -32.42;
+        }
+    }
+
+    .navbar-nav {
+        // form {
+        //     .search {
+        //         position: relative;
+
+        //         i {
+        //             @include position($t: 50%, $l: 10px);
+        //             transform: translateY(-50%);
+        //             color: var(--tm);
+        //             font-size: 12px;
+        //             pointer-events: none;
+        //         }
+
+        //         input {
+        //             padding: 9px 16px 9px 38px;
+        //             border: 1px solid var(--bd);
+        //             background-color: var(--bg2);
+        //             font-size: 14px;
+        //             transition: all .5s;
+        //             box-shadow: none;
+        //             width: 300px;
+        //             color: var(--ac);
+
+        //             @include responsive(1050) {
+        //                 width: 150px;
+        //             }
+
+        //             &:focus {
+        //                 outline: none;
+        //                 border-color: var(--ac);
+        //                 background-color: var(--surf);
+        //             }
+
+        //             &::placeholder {
+        //                 color: rgba(from var(--ac) r g b / 0.5);
+        //             }
+        //         }
+        //     }
+        // }
+
+        li {
+            a.nav-link {
+                color: var(--ts-text);
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: 8px;
+                transition: all .3s .3s;
+                position: relative;
+                overflow: hidden;
+
+
+                &::before {
+                    @include position ($t: 50%, $l: 100%);
+                }
+
+                &::after {
+                    @include position ($t: 50%, $r: 100%);
+                }
+
+                &::before,
+                &::after {
+                    @include createEle(20px, 20px);
+                    transform: translateY(-50%);
+                    background-color: var(--ac);
+                    border-radius: 100%;
+                    transition:
+                        left 0.5s,
+                        right 0.5s,
+                        width 0.5s 0.5s,
+                        height 0.5s 0.5s,
+                        border-radius 0.5s 0.5s;
+                }
+
+                &.active,
+                &:hover {
+                    color: var(--surf);
+
+                    &::before,
+                    &::after {
+                        border-radius: 8px;
+                        @include area(100%, 100%);
+                    }
+
+                    &::before {
+                        left: 40%;
+                    }
+
+                    &::after {
+                        right: 40%;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    .auth-info {
+        position: relative;
+
+        li {
+            &.nav-icon {
+                .nav-mode {
+                    background-color: var(--bg2);
+                    color: var(--brand);
+                    border-radius: 100%;
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid var(--bd);
+                    cursor: pointer;
+                    font-size: 14px;
+
+                    &:hover {
+                        background-color: var(--ac2);
+                        transform: rotate(30deg);
+                        border-color: var(--ac);
+                    }
+                }
+            }
+
+            &.nav-user {
+
+                .nav-data {
+                    padding: 8px;
+                    background-color: var(--bg2);
+                    border: 1px solid var(--bd);
+                    border-radius: 8px;
+
+                    span {
+                        width: 24px;
+                        height: 24px;
+                        background-color: var(--brand);
+                        color: var(--surf);
+                        border-radius: 100%;
+                    }
+
+                    p {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            a#Login {
+                background-color: var(--brand);
+                color: #fff
+            }
+
+        }
+
+        button.logout {
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg2);
+            border: 1px solid var(--bd);
+            border-radius: 100%;
+            color: var(--brand);
+            color: var(--brand);
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover {
+                background-color: var(--ac2);
+                border-color: var(--ac);
+            }
+        }
+    }
+}

@@ -1,0 +1,68 @@
+@use '../../../styles/mixin' as *;
+
+.backdrop {
+
+    @include position(fixed, $z: 2000);
+    @include flex(center, center);
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 16px;
+    animation: fade 0.25s ease;
+}
+
+.reader {
+    width: min(1000px, 100%);
+    height: min(90dvh, 800px);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    overflow: hidden;
+    animation: pop 0.3s ease;
+
+    header {
+        border-bottom: 1px solid var(--bd);
+        background-color: var(--bg2);
+
+        h5 {
+            color: var(--brand-h);
+            font-size: 16px;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 100%;
+            border: 1px solid var(--bd);
+            background-color: var(--surf);
+            color: var(--brand);
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: var(--ac2);
+                border-color: var(--ac);
+            }
+        }
+    }
+
+    iframe {
+        flex: 1;
+        width: 100%;
+        border: 0;
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}

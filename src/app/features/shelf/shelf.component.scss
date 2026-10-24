@@ -1,0 +1,67 @@
+@use '../../styles/mixin' as *;
+
+.container {
+    .head {
+        h2 {
+            font-size: 40px;
+            font-weight: 600;
+
+            @include responsive(350) {
+                font-size: 25px;
+            }
+        }
+
+        p {
+            @include responsive(350) {
+                font-size: 12px;
+                max-width: 200px;
+            }
+        }
+
+        button.btn {
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px solid transparent;
+            background-color: var(--brand);
+            color: #fff;
+
+            @include responsive(350) {
+                font-size: 13px;
+            }
+        }
+    }
+
+    .content {
+        .shelf-info {
+            .item {
+                position: relative;
+                padding: 24px;
+                background-color: var(--surf);
+                border: 1px solid var(--bd);
+                border-radius: 12px;
+                overflow: hidden;
+
+                @include responsive(350) {
+                    max-width: 340px;
+                    margin: auto;
+                }
+
+                @include responsive(1250) {
+                    max-width: 340px;
+                    margin: initial;
+                }
+
+                &::before {
+                    @include createEle(5px, 100%);
+                    @include position(absolute, $t: 0, $l: 0);
+                    background-color: var(--color);
+                }
+
+                h2 {
+                    color: var(--color);
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

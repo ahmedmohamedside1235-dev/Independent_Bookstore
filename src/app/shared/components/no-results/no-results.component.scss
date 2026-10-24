@@ -1,0 +1,220 @@
+@use "../../../styles/mixin" as *;
+
+.no-results {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 40px 24px 32px;
+    background-color: var(--surf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+
+    &::before {
+        @include createEle(100%, 140px);
+        @include position($t: 0, $l: 0);
+        background: linear-gradient(var(--bg2), transparent);
+        pointer-events: none;
+    }
+
+    .art_svg {
+        position: relative;
+        display: block;
+        width: min(300px, 80%);
+        margin: 0 auto 8px;
+
+        .shelf {
+            fill: var(--bd2);
+        }
+
+        .shadow {
+            fill: var(--bg3);
+        }
+
+        .b1 {
+            fill: var(--brand);
+        }
+
+        .b2 {
+            fill: var(--ac);
+        }
+
+        .b3 {
+            fill: var(--gold);
+        }
+
+        .b4 {
+            fill: var(--bd2);
+        }
+
+        .gap {
+            fill: none;
+            stroke: var(--bd2);
+            stroke-width: 2;
+            stroke-dasharray: 6 6;
+        }
+
+        .lens {
+            fill: var(--surf);
+            fill-opacity: .85;
+            stroke: var(--brand);
+            stroke-width: 7;
+        }
+
+        .handle {
+            stroke: var(--brand);
+            stroke-width: 9;
+            stroke-linecap: round;
+        }
+
+        .q {
+            fill: var(--gold-h);
+            font: 700 38px Georgia, "Times New Roman", serif;
+        }
+
+        .spark {
+            fill: var(--gold);
+        }
+
+        .s2 {
+            opacity: .7;
+        }
+
+        .float {
+            animation: float 4s ease-in-out infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+    }
+
+    .title {
+        position: relative;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+
+        @include responsive(350) {
+            font-size: 12px;
+        }
+
+        @include responsive(650) {
+            font-size: 19px;
+        }
+
+        .query {
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: bottom;
+            padding: 5px 20px;
+            border-radius: 999px;
+            background-color: var(--ac2);
+            color: var(--brand);
+            font-size: 18px;
+
+            @include responsive(350) {
+                font-size: 12px;
+            }
+
+            @include responsive(650) {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .sub {
+        position: relative;
+        max-width: 440px;
+        font-size: 15px;
+        color: var(--ts-text);
+
+    }
+
+    .tips {
+        position: relative;
+        gap: 8px;
+        margin: 16px 0 20px;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ts-text);
+            background-color: var(--bg2);
+            border: 1px solid var(--bd);
+            border-radius: 10px;
+
+            i {
+                color: var(--gold-h);
+                font-size: 12px;
+            }
+        }
+    }
+
+    .btn-clear {
+        position: relative;
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-weight: 600;
+        background-color: var(--brand);
+        color: var(--surf);
+        border: 1px solid var(--brand);
+        transition: all .3s;
+
+        &:hover {
+            background-color: var(--brand-h);
+            border-color: var(--brand-h);
+        }
+    }
+
+    .suggest {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px dashed var(--bd);
+
+        .label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--tm);
+            margin-bottom: 12px;
+        }
+
+        .chips {
+            gap: 8px;
+
+            .chip {
+                padding: 6px 16px;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: capitalize;
+                color: var(--tp);
+                background-color: var(--bg-main);
+                border: 1px solid var(--bd);
+                border-radius: 999px;
+                transition: all .3s;
+
+                &:hover {
+                    background-color: var(--ac2);
+                    border-color: var(--gold);
+                    color: var(--brand);
+                }
+            }
+        }
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(-6px) rotate(-3deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .no-results .art_svg .float {
+        animation: none;
+    }
+}

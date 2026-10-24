@@ -1,0 +1,48 @@
+<div class="no-results text-center">
+    <svg class="art_svg" viewBox="0 0 300 200" role="img" aria-label="Empty bookshelf with a magnifying glass">
+        <ellipse class="shadow" cx="150" cy="176" rx="130" ry="9" />
+        <rect class="shelf" x="20" y="150" width="260" height="12" rx="6" />
+        <rect class="b1" x="38" y="82" width="26" height="68" rx="4" />
+        <rect class="b2" x="68" y="62" width="22" height="88" rx="4" />
+        <rect class="b3" x="94" y="96" width="28" height="54" rx="4" />
+        <rect class="b4" x="128" y="76" width="20" height="74" rx="4" transform="rotate(-8 138 150)" />
+        <rect class="gap" x="170" y="70" width="42" height="80" rx="6" />
+        <rect class="b2" x="236" y="90" width="26" height="60" rx="4" />
+        <g class="float">
+            <circle class="lens" cx="196" cy="86" r="34" />
+            <line class="handle" x1="221" y1="111" x2="246" y2="136" />
+            <text class="q" x="196" y="99" text-anchor="middle">?</text>
+        </g>
+        <path class="spark" d="M44 40l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" />
+        <path class="spark s2" d="M262 34l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" />
+    </svg>
+
+    <h4 class="title d-flex justify-content-center align-items-center">
+        No books found for
+        <span class="query ms-3">{{ query() | editTitle}}</span>
+    </h4>
+    <p class="sub mx-auto">
+        The title might be spelled differently, or we haven’t added the book yet. Try one of these:
+    </p>
+
+    <ul class="tips list-unstyled d-flex flex-wrap justify-content-center">
+        <li><i class="fa-solid fa-spell-check"></i> Check your spelling</li>
+        <li><i class="fa-solid fa-scissors"></i> Use fewer words</li>
+        <li><i class="fa-solid fa-user-pen"></i> Search by author</li>
+    </ul>
+
+    <button type="button" class="btn btn-clear" (click)="cleared.emit()">
+        <i class="fa-solid fa-xmark me-1"></i> Clear search
+    </button>
+
+    @if (suggestions().length) {
+    <div class="suggest">
+        <p class="label">You might also like</p>
+        <div class="chips d-flex flex-wrap justify-content-center">
+            @for (name of suggestions(); track name) {
+            <button type="button" class="chip" (click)="suggestionPicked.emit(name)">{{ name }}</button>
+            }
+        </div>
+    </div>
+    }
+</div>

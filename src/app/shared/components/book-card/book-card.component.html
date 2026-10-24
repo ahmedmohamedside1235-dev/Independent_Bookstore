@@ -1,0 +1,42 @@
+<div class="book-card" (mouseenter)="getDescriptionBooks()">
+    <div class="layout d-flex justify-content-center align-items-center">
+        @if (book()?.coverId) {
+        <img src="{{book()?.coverId}}" alt="{{book()?.title}}" #bookImg class="book-cover" />
+        } @else {
+        <img src="images/defaultBook.png" alt="{{book()?.title}}" #bookImg class="book-cover" />
+        }
+    </div>
+    <div class="content-into  py-3 px-3 d-flex flex-column justify-content-between">
+        <div class="book-info">
+            <h5 class="mb-1">{{book()?.title | editTitle}}</h5>
+            <p class="mb-1 year">
+                {{book()?.authorName}} , {{book()?.firstPublishYear}}
+            </p>
+            @if(!descriptionLoad()) {
+            <div class="info">
+                <p class="description p2 p-1 mb-1">
+                    {{bookDescription() | editDescription:15}}
+                </p>
+            </div>
+            } @else {
+            <p class="description load p2 mb-1">
+                Loading description...
+            </p>
+            }
+        </div>
+        <div class="book-actions">
+            @if(!isBookInShelf()) {
+            <button class="btn d-block m-auto w-100" #btnAddShelf (click)="addToShelf()">
+                <i class="fa-solid fa-bookmark"></i> Add to shelf
+            </button>
+            }@else{
+            <button class="btn d-block m-auto w-100 btn-danger" #btnAddShelf (click)="removeFromShelf()">
+                <i class="fa-solid fa-trash"></i> remove from shelf
+            </button>
+            }
+            <p class="mb-1 mt-2 m-auto w-100 text-center" (click)="showDetailsBook(book().key);">
+                <i class="fa-solid fa-book-open"></i> Open this book
+            </p>
+        </div>
+    </div>
+</div>

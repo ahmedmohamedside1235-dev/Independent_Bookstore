@@ -17,7 +17,7 @@ import { NotificationService } from '../../../core/services/notification.service
   imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './register.component.scss',
+  styleUrls: ['./register.component.scss', './../auth.component.scss'],
 })
 export class RegisterComponent {
   public isShowPassword = signal<boolean>(false);
@@ -29,7 +29,7 @@ export class RegisterComponent {
   public isShow = input.required<boolean>();
   public isHide = signal<boolean>(false);
   public switchToLogin = output<boolean>();
-  public notificationService = inject(NotificationService);
+  private notificationService = inject(NotificationService);
 
   public confirmPassword = signal<string>('');
   public current_password = signal<string>('');
@@ -49,7 +49,7 @@ export class RegisterComponent {
       this.hasSpecialChar(),
   );
 
-  public userService = inject(AuthService);
+  private userService = inject(AuthService);
 
   public onConfirmPasswordInput(value: string): void {
     this.confirmPassword.set(value);

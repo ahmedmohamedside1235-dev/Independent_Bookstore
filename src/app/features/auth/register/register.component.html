@@ -1,4 +1,4 @@
-<div class="register {{isShow() ? 'show' : ''}} {{isHide() ? 'hide' : ''}} py-4">
+<div class="register auth {{isShow() ? 'show' : ''}} {{isHide() ? 'hide' : ''}} py-4">
     <div class="content">
         <div class="head d-flex justify-content-center align-items-center py-4 flex-column">
             <i class="fa-solid fa-feather-pointed mb-2"></i>
@@ -100,7 +100,8 @@
                             </li>
                         </ul>
                         }@else if (password.value === "" && password.touched) {
-                        <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> The password is
+                        <p class="invalid w-100 mb-0"><i class="fa-solid fa-circle-exclamation me-1"></i> The password
+                            is
                             required</p>
                         }
 
