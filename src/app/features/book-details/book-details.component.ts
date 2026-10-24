@@ -1,12 +1,12 @@
 import { Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { BookService } from '../../core/services/bookServices/book.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { loadingComponent } from '../../shared/components/loading/loading.component';
 import { EditDescriptionPipe } from '../../shared/pipe/edit-description-pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BookReaderComponent } from '../../shared/components/book-reader/book-reader.component';
 import { ShelfUserBooksService } from '../../core/services/bookServices/shelf-user-books.service';
-import { NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';;
 import { ShelfStatus } from '../../core/models/shelfStatus.model';
 import { NotificationService } from '../../core/services/notification.service';
 import { CleanDescriptionPipe } from '../../shared/pipe/clean-description-pipe';
@@ -24,6 +24,7 @@ export class BookDetailsComponent {
   public bookService = inject(BookService);
   public auth = inject(AuthService);
   public router = inject(ActivatedRoute);
+  public routerLink = inject(Router);
   public shelfService = inject(ShelfUserBooksService);
   public notification = inject(NotificationService);
   public fly = inject(FlyToCartService);
@@ -42,6 +43,7 @@ export class BookDetailsComponent {
 
     if (!user) {
       this.notification.show('Please log in to show book details', 'error');
+      this.routerLink.navigate(['/auth']);
       return;
     }
 
