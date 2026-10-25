@@ -45,7 +45,6 @@ export class ShelfComponent {
   }
 
   onStatusChange(event: { bookKey: string; status: ShelfStatus }): void {
-    console.log(event);
     this.shelf.updateStatus(event.bookKey, event.status);
   }
 
