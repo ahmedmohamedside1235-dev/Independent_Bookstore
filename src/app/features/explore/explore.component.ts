@@ -73,6 +73,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
     this.router.params.subscribe(params => {
       let query = params['query'] ?? '';
+      if (!query) return;
       this.getBooks(query);
     });
   }
@@ -105,7 +106,9 @@ export class ExploreComponent implements OnInit, OnDestroy {
       this.getBooksByQuery(query.toLowerCase().trim());
     }
 
-    this.scrollToBooks();
+    setTimeout(() => {
+      this.scrollToBooks();
+    }, 100);
   }
 
   // set active to subject and get books
