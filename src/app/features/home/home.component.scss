@@ -97,7 +97,6 @@
             width: 100%;
             border: 1px solid var(--bd);
             transition: all .3s;
-            cursor: pointer;
 
             @include responsive(350) {
                 width: 280px;
@@ -186,6 +185,12 @@
                     p {
                         color: #fff;
                     }
+
+                    span {
+                        i {
+                            color: #fff;
+                        }
+                    }
                 }
 
                 p {
@@ -195,6 +200,11 @@
 
                 span {
                     font-size: 26px;
+
+                    i {
+                        color: var(--brand-h);
+                        transition-duration: .5s;
+                    }
                 }
             }
         }
@@ -285,6 +295,10 @@
                 height: 45px;
                 border-radius: 100%;
                 background-color: var(--ac2);
+
+                i {
+                    color: var(--brand-h);
+                }
             }
         }
     }

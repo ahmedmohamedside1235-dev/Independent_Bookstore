@@ -20,16 +20,18 @@ export class HomeComponent {
   public isError = signal<boolean>(false);
   private bookService = inject(BookService);
   public search: string = "";
+
   readonly moodes = [
-    { icon: '⚔️', name: 'Fantasy' },
-    { icon: '🔍', name: 'Mystery' },
-    { icon: '💞', name: 'Romance' },
-    { icon: '🚀', name: 'Sci-Fi' },
+    { icon: 'fa-hat-wizard', name: 'Fantasy' },
+    { icon: 'fa-user-secret', name: 'Mystery' },
+    { icon: 'fa-heart', name: 'Romance' },
+    { icon: 'fa-rocket', name: 'Sci-Fi' },
   ];
+
   readonly hows = [
-    { icon: '🔍', text: 'Live results from millions of titles on Open Library.', name: 'Search' },
-    { icon: '🔖', text: 'One click, three simple statuses to track.', name: 'Save to shelf' },
-    { icon: '📈', text: 'Watch your shelf and stats grow over time.', name: 'Track progress' },
+    { icon: 'fa-magnifying-glass', text: 'Live results from millions of titles on Open Library.', name: 'Search' },
+    { icon: 'fa-bookmark', text: 'One click, three simple statuses to track.', name: 'Save to shelf' },
+    { icon: 'fa-chart-line', text: 'Watch your shelf and stats grow over time.', name: 'Track progress' },
   ];
 
   ngOnInit() {

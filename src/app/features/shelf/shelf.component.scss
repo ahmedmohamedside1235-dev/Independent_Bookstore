@@ -52,9 +52,10 @@
                 }
 
                 &::before {
-                    @include createEle(5px, 100%);
-                    @include position(absolute, $t: 0, $l: 0);
+                    @include createEle(20px, 40px);
+                    @include position(absolute, $t: 0, $r: 20px);
                     background-color: var(--color);
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
                 }
 
                 h2 {

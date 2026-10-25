@@ -37,7 +37,7 @@
           <div class="categ-info py-3 px-3 text-center">
             <div class="book mt-3 mb-2 d-flex justify-content-center align-items-end">
               @for (h of category.spineHeights; track $index) {
-              <span class="shelf-card__spine" [style.height.px]="h"></span>
+              <span class="shelf_spine" [style.height.px]="h"></span>
               }
             </div>
             <h5 class="my-0">{{ category.name }}</h5>
@@ -103,7 +103,7 @@
         </div>
         }
       </div>
-      @if (books().length > 0 && books().length >= 15) {
+      @if (books().length > 0 && hasMore()) {
       <button type="button" animationClass="fadeIn"
         class="up {{ isLoadingMore() ? 'load' : '' }} btn m-auto px-5 d-block mt-4 LoadBookMore"
         [disabled]="isLoadingMore()" (click)="loadMore()">

@@ -62,10 +62,10 @@
         <div class="row">
             @for (moode of moodes; track $index) {
             <div class="moodes mb-4 mb-lg-0 up col-sm-6 col-lg-3" animationClass="fadeIn"
-                [animationDelay]="$index * 300">
+                [animationDelay]="$index * 200">
                 <div class="item py-4 px-5" (click)="showBooksInExplore(moode.name)">
                     <div class="position-relative z-3 d-flex flex-column align-items-center justify-content-center">
-                        <span>{{ moode.icon }}</span>
+                        <span><i class="fa-solid {{ moode.icon }}"></i></span>
                         <p class="mb-0">{{ moode.name }}</p>
                     </div>
                 </div>
@@ -102,13 +102,13 @@
 
                 @else if (books().length > 1) {
 
-                    @for (book of books(); track book.key) {
-                    <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 100">
-                        <div class="item cardBook">
-                            <app-book-card [book]="book"></app-book-card>
-                        </div>
+                @for (book of books(); track book.key) {
+                <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 100">
+                    <div class="item cardBook">
+                        <app-book-card [book]="book"></app-book-card>
                     </div>
-                    }
+                </div>
+                }
 
                 }
 
@@ -139,9 +139,9 @@
                 @for (how of hows; track how.icon) {
                 <div class="col-lg-4 {{ $index < 2 ? 'col-md-6' : 'col-md-12 m-auto' }} scale" animationClass="scaleUp">
                     <div class="item info d-flex mb-5 align-items-center flex-column">
-                        <span class="d-flex justify-content-center mb-3 align-items-center">{{
-                            how.icon
-                            }}</span>
+                        <span class="d-flex justify-content-center mb-3 align-items-center">
+                            <i class="fa-solid {{ how.icon }}"></i>
+                        </span>
                         <h5>{{ how.name }}</h5>
                         <p>{{ how.text }}</p>
                     </div>
