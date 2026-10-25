@@ -68,9 +68,6 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
   // if found query params in url
   ngOnInit() {
-    // check if user is login or not
-    this.checkIsLogin();
-
     this.router.params.subscribe(params => {
       let query = params['query'] ?? '';
       if (!query) return;
@@ -80,14 +77,6 @@ export class ExploreComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.request?.unsubscribe();
-  }
-
-  private checkIsLogin() {
-    if (!this.authService.currentUser()) {
-      this.notificationService.show('Please log in to explore books.', 'error');
-      this.routerLinks.navigate(['/auth']);
-      return;
-    }
   }
 
   private scrollToBooks() {

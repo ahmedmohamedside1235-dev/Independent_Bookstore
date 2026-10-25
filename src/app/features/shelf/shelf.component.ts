@@ -1,9 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ShelfStatusComponent } from './shelf-status/shelf-status.component';
 import { ShelfUserBooksService } from '../../core/services/bookServices/shelf-user-books.service';
 import { ShelfStatus } from '../../core/models/shelfStatus.model';
 import { AnimationDirective } from '../../shared/directives/animation.directive';
+import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
+
 
 @Component({
   selector: 'app-shelf',
@@ -13,6 +16,10 @@ import { AnimationDirective } from '../../shared/directives/animation.directive'
 })
 export class ShelfComponent {
   public shelf = inject(ShelfUserBooksService);
+  public auth = inject(AuthService);
+  private routerLinks = inject(Router);
+  private notificationService = inject(NotificationService);
+
 
   public readonly statusOptions: { value: ShelfStatus; label: string }[] = [
     { value: 'want-to-read', label: 'Want to Read' },
@@ -20,12 +27,22 @@ export class ShelfComponent {
     { value: 'finished', label: 'Finished' }
   ];
 
-  finishedThisYear = computed(() => {
+  public finishedThisYear = computed(() => {
     const currentYear = new Date().getFullYear();
     return this.shelf
       .finished()
       .filter((i) => new Date(i.updatedAt).getFullYear() === currentYear).length;
   });
+
+  ngOnInit() {
+    let user = this.auth.currentUser();
+
+    if (!user) {
+      this.notificationService.show('Please log in to explore books.', 'error');
+      this.routerLinks.navigate(['/auth']);
+      return;
+    }
+  }
 
   onStatusChange(event: { bookKey: string; status: ShelfStatus }): void {
     console.log(event);

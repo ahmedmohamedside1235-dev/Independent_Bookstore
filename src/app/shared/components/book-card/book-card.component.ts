@@ -56,6 +56,7 @@ export class BookCardComponent {
 
     if (!isLogin) {
       this.notification.show('Please log in to add books to your shelf.', 'error');
+      this.router.navigate(['/auth']);
       return;
     }
 
