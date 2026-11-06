@@ -30,7 +30,7 @@
 
                 <div class="shelf_actions">
                     <select class="shelf_select me-2" [attr.aria-label]="'Change status for ' + book.title"
-                        (change)="StatusSelected(book.key, $any($event.target).value,imgCover)">
+                        (change)="StatusSelected(book, $any($event.target).value,imgCover)">
                         @for (opt of statusOptions(); track opt.value) {
                         <option [value]="opt.value" [selected]="book.status === opt.value">
                             {{ opt.label }}

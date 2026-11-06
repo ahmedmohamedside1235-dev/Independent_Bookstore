@@ -60,13 +60,15 @@ export class ShelfComponent {
     return columns[status]?.nativeElement ?? null;
   }
 
-  onStatusChange(event: { bookKey: string; status: ShelfStatus; img: HTMLImageElement }, startEle: HTMLElement): void {
+  onStatusChange(event: { book: any; status: ShelfStatus; img: HTMLImageElement }, startEle: HTMLElement): void {
     let endEle = this.getColumn(event.status);
 
+    this.shelf.removeBookFromShelf(event.book.key);
+
     if (endEle && endEle !== startEle) {
-      this.fly.flyToShelf(event.img, startEle, endEle, () => this.shelf.updateStatus(event.bookKey, event.status));
+      this.fly.flyToShelf(event.img, startEle, endEle, () => this.shelf.addOrUpdate(event.book, event.status));
     } else {
-      this.shelf.updateStatus(event.bookKey, event.status);
+      this.shelf.addOrUpdate(event.book, event.status);
     }
 
   }

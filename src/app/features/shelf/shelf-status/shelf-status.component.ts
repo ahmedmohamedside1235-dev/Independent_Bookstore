@@ -18,15 +18,15 @@ export class ShelfStatusComponent {
   public statusOptions = input.required<{ value: ShelfStatus; label: string }[]>();
 
 
-  public changeStatus = output<{ bookKey: string; status: ShelfStatus; img: HTMLImageElement }>();
+  public changeStatus = output<{ book: any; status: ShelfStatus; img: HTMLImageElement }>();
   public removeBook = output<string>();
 
   authorsLabel(item: any): string {
     return item.authorName == '' ? 'Unknown author' : item.authorName;
   }
 
-  StatusSelected(bookKey: string, status: ShelfStatus, img: HTMLImageElement) {
-    this.changeStatus.emit({ bookKey, status, img });
+  StatusSelected(book: any, status: ShelfStatus, img: HTMLImageElement) {
+    this.changeStatus.emit({ book, status, img });
   }
 
 }
