@@ -33,11 +33,6 @@ export const routes: Routes = [
       import('../app/features/shelf/shelf.component').then((file) => file.ShelfComponent),
   },
   {
-    path: 'book_details/:key',
-    loadComponent: () =>
-      import('../app/features/book-details/book-details.component').then((file) => file.BookDetailsComponent),
-  },
-  {
     path: '**',
     redirectTo: '',
   },

@@ -10,17 +10,17 @@ export class FlyToCartService {
         this.shelfElement = element;
     }
 
-    flyToShelf(img: HTMLElement, startElement: HTMLElement) {
+    flyToShelf(img: HTMLElement, startElement: HTMLElement, endElement: HTMLElement | null = null, onDone?: () => void) {
 
         // get the position of the image and the cart
         let start = startElement.getBoundingClientRect(),
-            end = this.shelfElement.getBoundingClientRect();
+            end = endElement ? endElement.getBoundingClientRect() : this.shelfElement.getBoundingClientRect();
 
         // get clone from the image and set its style
         let clone = img.cloneNode(true) as HTMLElement;
         Object.assign(clone.style, {
             position: 'fixed',
-            left: start.left + 'px' ,
+            left: start.left + 'px',
             top: start.top + 'px',
             width: '60px',
             height: '60px',
@@ -35,14 +35,17 @@ export class FlyToCartService {
 
         // move image to the cart using GSAP animation
         gsap.to(clone, {
-            left: end.left,
+            left: end.left + end.width / 2 - 10,
             top: end.top,
             width: 20,
             height: 20,
             opacity: 0.5,
             duration: 0.8,
             ease: 'power2.in',
-            onComplete: () => clone.remove()
+            onComplete: () => {
+                clone.remove();
+                onDone?.();
+            }
         });
     }
 }

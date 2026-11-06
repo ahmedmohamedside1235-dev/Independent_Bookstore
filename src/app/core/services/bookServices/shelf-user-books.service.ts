@@ -50,30 +50,10 @@ export class ShelfUserBooksService {
             return false;
         }
 
-        if (existing) {
-            this.store.update((store) => ({
-                ...store,
-                [userId]: (store[userId] ?? []).map((item) =>
-                    item.key === book.key ? { ...item, status, updatedAt: now } : item
-                )
-            }));
+        if (existing) this.updateStatus(book.key, status);
+        else this.addNewBook(userId, book, status);
 
-            return true;
-
-        } else {
-            let { key, title, authorName, firstPublishYear, coverId } = book,
-                newBook = {
-                    key, title, authorName, firstPublishYear, coverId,
-                    addedAt: now, updatedAt: now, status
-                };
-
-            this.store.update((store) => ({
-                ...store,
-                [userId]: [newBook, ...(store[userId] ?? [])]
-            }));
-            return true;
-
-        }
+        return true;
     }
 
     updateStatus(bookKey: string, status: ShelfStatus): void {
@@ -81,12 +61,19 @@ export class ShelfUserBooksService {
 
         if (!userId) return;
 
-        this.store.update((store) => ({
-            ...store,
-            [userId]: (store[userId] ?? []).map((book) =>
-                book.key === bookKey ? { ...book, status, updatedAt: Date.now() } : book
-            )
-        }));
+        this.store.update((store) => {
+            let books = store[userId] ?? [],
+                book = books.find((item) => item.key === bookKey);
+
+            if (!book || book.status === status) return store;
+
+            let others = books.filter((book) => book.key !== bookKey);
+
+            return {
+                ...store,
+                [userId]: [{ ...book, status, updatedAt: Date.now() }, ...others]
+            };
+        });
     }
 
     public removeBookFromShelf(bookKey: string): void {
@@ -97,6 +84,19 @@ export class ShelfUserBooksService {
         this.store.update(store => ({
             ...store,
             [userId]: (store[userId] ?? []).filter(book => book.key !== bookKey)
+        }));
+    }
+
+    private addNewBook(userId: string, book: any, status: ShelfStatus): void {
+        let now = Date.now(),
+            { key, title, authorName, firstPublishYear, coverId } = book;
+
+        this.store.update((store) => ({
+            ...store,
+            [userId]: [
+                { key, title, authorName, firstPublishYear, coverId, addedAt: now, updatedAt: now, status },
+                ...(store[userId] ?? [])
+            ]
         }));
     }
 

@@ -42,27 +42,28 @@
         <div class="shelf-status mb-5">
 
             <div class="row">
-                <div class="col-lg-6 col-xl-4 right" animationClass="fadeRight">
+                <div class="col-lg-6 col-xl-4 right" #wantToRead animationClass="fadeRight">
                     <div class="item mb-4 mb-xl-0">
                         <app-shelf-status [books]="shelf.wantToRead()" title="Want to read"
                             emptyMsg="Books you plan to read will wait here." color="#d4a24c"
-                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event)"
+                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event,wantToRead)"
                             (removeBook)="onRemove($event)"></app-shelf-status>
                     </div>
                 </div>
-                <div class="col-lg-6 col-xl-4 up" animationClass="fadeIn" [animationDelay]="200">
+                <div class="col-lg-6 col-xl-4 up" #reading animationClass="fadeIn">
                     <div class="item mb-4 mb-xl-0">
                         <app-shelf-status [books]="shelf.reading()" title="Reading"
                             emptyMsg="Pick up a book and it will show up here." color="#5FA8D3"
-                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event)"
+                            [statusOptions]="statusOptions" (changeStatus)="onStatusChange($event,reading)"
                             (removeBook)="onRemove($event)"></app-shelf-status>
                     </div>
                 </div>
-                <div class="col-lg-12 col-xl-4 left" animationClass="fadeLeft" [animationDelay]="200">
+                <div class="col-lg-12 col-xl-4 left" #finished animationClass="fadeLeft" [animationDelay]="200">
                     <div class="item">
                         <app-shelf-status [books]="shelf.finished()" title="Finished" [statusOptions]="statusOptions"
                             emptyMsg="Books you've completed will line up here." color="#6FBF8B"
-                            (changeStatus)="onStatusChange($event)" (removeBook)="onRemove($event)"></app-shelf-status>
+                            (changeStatus)="onStatusChange($event,finished)"
+                            (removeBook)="onRemove($event)"></app-shelf-status>
                     </div>
                 </div>
             </div>

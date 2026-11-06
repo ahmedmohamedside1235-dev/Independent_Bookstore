@@ -6,7 +6,6 @@ import { loadingComponent } from "../../shared/components/loading/loading.compon
 import { BookCardComponent } from "../../shared/components/book-card/book-card.component";
 import { AnimationDirective } from "../../shared/directives/animation.directive";
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { NoResultsComponent } from '../../shared/components/no-results/no-results.component';
 
@@ -32,7 +31,6 @@ export class ExploreComponent implements OnInit, OnDestroy {
   public readonly suggestionNames = this.categories.map((category) => category.name);
 
   private bookService = inject(BookService);
-  private authService = inject(AuthService);
   private router = inject(ActivatedRoute);
   private routerLinks = inject(Router);
   private notificationService = inject(NotificationService);

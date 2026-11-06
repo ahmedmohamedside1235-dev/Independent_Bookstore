@@ -103,7 +103,7 @@
                 @else if (books().length > 1) {
 
                 @for (book of books(); track book.key) {
-                <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 100">
+                <div class="col scale mb-4" animationClass="scaleUp" [animationDelay]="$index * 80">
                     <div class="item cardBook">
                         <app-book-card [book]="book"></app-book-card>
                     </div>

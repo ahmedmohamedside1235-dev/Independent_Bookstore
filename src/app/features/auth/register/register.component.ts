@@ -9,30 +9,32 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule],
   templateUrl: './register.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./register.component.scss', './../auth.component.scss'],
 })
 export class RegisterComponent {
+  private notificationService = inject(NotificationService);
+  private userService = inject(AuthService);
+
+  public switchToLogin = output<boolean>();
+  public isShow = input.required<boolean>();
+
   public isShowPassword = signal<boolean>(false);
   public isShowPasswordConfirm = signal<boolean>(false);
   public isValidName = signal<boolean>(false);
   public isValidEmail = signal<boolean>(false);
   public isValidPhone = signal<boolean>(false);
   public isEmailUnique = signal<boolean>(true);
-  public isShow = input.required<boolean>();
   public isHide = signal<boolean>(false);
-  public switchToLogin = output<boolean>();
-  private notificationService = inject(NotificationService);
-
   public confirmPassword = signal<string>('');
   public current_password = signal<string>('');
+
 
   public hasMinLength = computed(() => this.current_password().length >= 8);
   public hasUppercase = computed(() => /(?=.*[A-Z])/.test(this.current_password()));
@@ -49,7 +51,6 @@ export class RegisterComponent {
       this.hasSpecialChar(),
   );
 
-  private userService = inject(AuthService);
 
   public onConfirmPasswordInput(value: string): void {
     this.confirmPassword.set(value);
@@ -122,7 +123,7 @@ export class RegisterComponent {
     form.reset();
     this.current_password.set('');
     this.confirmPassword.set('');
-    this.notificationService.show('Account created successfuly', 'success');
+    this.notificationService.show('Account created successfully', 'success');
     this.switchRequested();
   }
 

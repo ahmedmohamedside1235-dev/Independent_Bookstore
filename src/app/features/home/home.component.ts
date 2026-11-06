@@ -15,7 +15,6 @@ import { loadingComponent } from '../../shared/components/loading/loading.compon
 export class HomeComponent {
   public books = signal<any[]>([]);
   private router = inject(Router);
-  public bookDescriptions = signal<any[]>([]);
   public isLoading = signal<boolean>(true);
   public isError = signal<boolean>(false);
   private bookService = inject(BookService);

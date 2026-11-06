@@ -1,6 +1,5 @@
 import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
 import { MessageComponent } from './shared/components/message/message.component';
 import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 

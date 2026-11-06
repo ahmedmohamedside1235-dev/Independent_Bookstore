@@ -19,8 +19,8 @@ export class LoginComponent {
   public switchToRegister = output<boolean>();
   public isHide = signal<boolean>(false);
   public isShow = input.required<boolean>();
-  private userSrvices = inject(AuthService);
-  private notificationServive = inject(NotificationService);
+  private userServices = inject(AuthService);
+  private notificationService = inject(NotificationService);
   private router = inject(Router);
 
   public toggleIcon(): void {
@@ -35,13 +35,13 @@ export class LoginComponent {
     this.isEmailRequired.set(email === '');
     this.isPasswordRequired.set(password === '');
     if (email === '' || password === '') return;
-    let success = this.userSrvices.login(email, password);
+    let success = this.userServices.login(email, password);
     if (!success) {
       this.invalidCredentials.set(true);
       return;
     }
     this.invalidCredentials.set(false);
-    this.notificationServive.show('Login Successfully', 'success');
+    this.notificationService.show('Login Successfully', 'success');
     form.reset();
     this.router.navigate(['']);
   }

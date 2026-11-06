@@ -19,14 +19,11 @@ export class NavbarComponent {
   private notification = inject(NotificationService);
   private flyToCartService = inject(FlyToCartService);
   private router = inject(Router);
-
-  public user = this.authService.currentUser;
   public themeService = inject(ColorModeService);
-  public userName = signal<string>("");
-  public shortName = signal<string>("");
 
   public shelf = viewChild<ElementRef<HTMLLIElement>>('shelfCart');
 
+  public user = this.authService.currentUser;
 
   ngAfterViewInit() {
     let element = this.shelf()?.nativeElement;
@@ -35,7 +32,7 @@ export class NavbarComponent {
 
   public logout() {
     this.authService.logout();
-    this.notification.show('logout successfuly', 'success');
+    this.notification.show('logout successfully', 'success');
     this.router.navigate(['auth']);
   }
 }

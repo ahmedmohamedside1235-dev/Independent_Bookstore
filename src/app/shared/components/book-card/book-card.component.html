@@ -1,4 +1,5 @@
 <div class="book-card" (mouseenter)="getDescriptionBooks()">
+    <div class="layout-back"></div>
     <div class="layout d-flex justify-content-center align-items-center">
         @if (book()?.coverId) {
         <img src="{{book()?.coverId}}" alt="{{book()?.title}}" #bookImg class="book-cover" />

@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, input, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, input, signal, viewChild } from '@angular/core';
 import { EditDescriptionPipe } from '../../pipe/edit-description-pipe';
 import { EditTitlePipe } from '../../pipe/edit-title-pipe';
 import { BookService } from '../../../core/services/bookServices/book.service';
@@ -27,14 +27,10 @@ export class BookCardComponent {
   public bookDescription = signal<string | ''>('');
   public isDescriptionRequest = signal<boolean>(false);
   public descriptionLoad = signal<boolean>(true);
-  public isBookInShelf = signal<boolean>(false);
 
   public img = viewChild<ElementRef<HTMLImageElement>>('bookImg');
   public btnAddShelf = viewChild<ElementRef<HTMLButtonElement>>('btnAddShelf');
-
-  ngOnInit() {
-    this.shelfUserBooksService.isBookInShelf(this.book().key) ? this.isBookInShelf.set(true) : this.isBookInShelf.set(false);
-  }
+  public isBookInShelf = computed(() => this.shelfUserBooksService.isBookInShelf(this.book().key));
 
   // get book description if it is not already fetched
   public getDescriptionBooks() {
@@ -66,7 +62,6 @@ export class BookCardComponent {
     let isAdded = this.shelfUserBooksService.addOrUpdate(this.book());
     if (isAdded) {
       this.notification.show('Book added to your shelf!', 'success');
-      this.isBookInShelf.set(true);
 
       if (imgElement && btnElement) {
         this.flyToCartService.flyToShelf(imgElement, btnElement);
@@ -76,14 +71,12 @@ export class BookCardComponent {
     }
 
     this.notification.show('Failed to add book to your shelf try again later.', 'error');
-    this.isBookInShelf.set(false);
 
   }
 
   public removeFromShelf() {
     this.shelfUserBooksService.removeBookFromShelf(this.book().key);
     this.notification.show('Book removed from your shelf!', 'success');
-    this.isBookInShelf.set(false);
   }
 
   showDetailsBook(key: any) {

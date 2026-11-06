@@ -4,6 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class EditDescriptionPipe implements PipeTransform {
   transform(value: string, maxLength: number): string {
+    if (!value) return '';
+
     let words = value.split(' ');
 
     if (words.length <= maxLength)

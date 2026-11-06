@@ -20,7 +20,7 @@
         <div class="shelf-item py-4 d-flex justify-content-center align-items-center">
             <a [routerLink]="['/book_details', book.key]" class="shelf_link">
                 <img [src]="book?.coverId || 'images/defaultBook.png'" [alt]="book.title" class="shelf_cover img-fluid"
-                    loading="lazy" />
+                    loading="lazy" #imgCover />
             </a>
 
             <div class="shelf_body d-flex justify-content-start flex-column">
@@ -30,7 +30,7 @@
 
                 <div class="shelf_actions">
                     <select class="shelf_select me-2" [attr.aria-label]="'Change status for ' + book.title"
-                        (change)="StatusSelected(book.key, $any($event.target).value)">
+                        (change)="StatusSelected(book.key, $any($event.target).value,imgCover)">
                         @for (opt of statusOptions(); track opt.value) {
                         <option [value]="opt.value" [selected]="book.status === opt.value">
                             {{ opt.label }}

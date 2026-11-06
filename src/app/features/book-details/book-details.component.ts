@@ -1,9 +1,8 @@
-import { Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { BookService } from '../../core/services/bookServices/book.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { loadingComponent } from '../../shared/components/loading/loading.component';
 import { EditDescriptionPipe } from '../../shared/pipe/edit-description-pipe';
-import { DomSanitizer } from '@angular/platform-browser';
 import { BookReaderComponent } from '../../shared/components/book-reader/book-reader.component';
 import { ShelfUserBooksService } from '../../core/services/bookServices/shelf-user-books.service';
 import { NgClass } from '@angular/common';;
@@ -73,10 +72,14 @@ export class BookDetailsComponent {
     const b = this.book();
     if (!b) return;
 
+    let wasInShelf = this.shelfService.isBookInShelf(b.key);
+
+    // returns false if the user is not logged in.
     if (!this.shelfService.addOrUpdate(b, status)) return;
 
+    this.notification.show(wasInShelf ? `Status changed to ${status}` : `The book has been added to shelf as ${status}`);
+
     this.selectedShelf.set(status);
-    this.notification.show(`The book has been added to shelf as ${status}`);
     this.fly.flyToShelf(image, startEle);
   }
 
